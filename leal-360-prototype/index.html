@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leal API - Documentación</title>
+    <meta name="description" content="API completas para gestión de puntos, redenciones y programa de fidelización para retail moderno">
+            <link rel="stylesheet" href="styles.css?v=2025-10-08-10-85">
+            <link rel="stylesheet" href="overview-styles.css?v=2025-10-08-12-10">
+    <link rel="icon" type="image/png" href="leal-api-guide-main/src/assets/leal-logo-final.png">
+</head>
+<body>
+    <!-- Header simple con fondo blanco -->
+    <header class="simple-header">
+        <div class="header-logo">
+            <img src="leal360-original.svg" alt="Leal 360" class="logo">
+        </div>
+        <nav class="header-nav">
+            <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+            <button class="nav-btn" onclick="showSection('integrations')">Integraciones</button>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div id="mainContent">
+            <!-- Contenido se carga dinámicamente -->
+        </div>
+    </main>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuBtn" class="btn btn-primary" style="display: none; position: fixed; top: 1rem; left: 1rem; z-index: 100;">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Menú
+    </button>
+
+        <script src="script.js?v=2025-10-08-12-15"></script>
+</body>
+</html>

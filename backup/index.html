@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leal API Guide - Documentación</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Leal API</h1>
+                <span class="version">v2.0</span>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Buscar en la documentación...">
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-section">
+                    <h3>Introducción</h3>
+                    <ul>
+                        <li><a href="#overview" class="nav-link active">Visión General</a></li>
+                        <li><a href="#authentication" class="nav-link">Autenticación</a></li>
+                        <li><a href="#rate-limits" class="nav-link">Límites de Velocidad</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-section">
+                    <h3>Endpoints</h3>
+                    <ul>
+                        <li><a href="#users" class="nav-link">Usuarios</a></li>
+                        <li><a href="#loyalty" class="nav-link">Programas de Lealtad</a></li>
+                        <li><a href="#points" class="nav-link">Puntos</a></li>
+                        <li><a href="#rewards" class="nav-link">Recompensas</a></li>
+                        <li><a href="#transactions" class="nav-link">Transacciones</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-section">
+                    <h3>Webhooks</h3>
+                    <ul>
+                        <li><a href="#webhook-setup" class="nav-link">Configuración</a></li>
+                        <li><a href="#webhook-events" class="nav-link">Eventos</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-section">
+                    <h3>SDK</h3>
+                    <ul>
+                        <li><a href="#javascript-sdk" class="nav-link">JavaScript</a></li>
+                        <li><a href="#python-sdk" class="nav-link">Python</a></li>
+                        <li><a href="#php-sdk" class="nav-link">PHP</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Overview Section -->
+            <section id="overview" class="section">
+                <div class="section-header">
+                    <h1>Leal API - Documentación</h1>
+                    <p class="section-description">
+                        La API de Leal te permite integrar programas de lealtad y recompensas en tu aplicación.
+                        Gestiona usuarios, puntos, recompensas y transacciones de manera sencilla y segura.
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Autenticación Segura</h3>
+                        <p>API Keys y OAuth 2.0 para máxima seguridad</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Alta Performance</h3>
+                        <p>Respuestas rápidas con rate limiting inteligente</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Analytics Completos</h3>
+                        <p>Métricas detalladas de engagement y lealtad</p>
+                    </div>
+                </div>
+
+                <div class="quick-start">
+                    <h2>Inicio Rápido</h2>
+                    <p>Comienza a usar la API en minutos:</p>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span>curl</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre><code class="language-bash">curl -X GET \
+  https://api.leal.co/v2/users/me \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Authentication Section -->
+            <section id="authentication" class="section">
+                <div class="section-header">
+                    <h2>Autenticación</h2>
+                    <p class="section-description">
+                        La API de Leal utiliza tokens de autenticación para asegurar el acceso a los recursos.
+                    </p>
+                </div>
+
+                <div class="auth-methods">
+                    <div class="auth-card">
+                        <h3>API Key</h3>
+                        <p>Para aplicaciones servidor a servidor</p>
+                        <div class="code-example">
+                            <div class="code-header">
+                                <span>Headers</span>
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            </div>
+                            <pre><code class="language-http">Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="auth-card">
+                        <h3>OAuth 2.0</h3>
+                        <p>Para aplicaciones que actúan en nombre de usuarios</p>
+                        <div class="code-example">
+                            <div class="code-header">
+                                <span>JavaScript</span>
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            </div>
+                            <pre><code class="language-javascript">const response = await fetch('https://api.leal.co/v2/oauth/token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    grant_type: 'authorization_code',
+    client_id: 'YOUR_CLIENT_ID',
+    client_secret: 'YOUR_CLIENT_SECRET',
+    code: 'AUTHORIZATION_CODE'
+  })
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rate Limits Section -->
+            <section id="rate-limits" class="section">
+                <div class="section-header">
+                    <h2>Límites de Velocidad</h2>
+                    <p class="section-description">
+                        Para garantizar la estabilidad del servicio, implementamos límites de velocidad en todas las rutas.
+                    </p>
+                </div>
+
+                <div class="rate-limit-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Plan</th>
+                                <th>Requests por minuto</th>
+                                <th>Requests por día</th>
+                                <th>Burst limit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="plan-badge basic">Básico</span></td>
+                                <td>60</td>
+                                <td>1,000</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td><span class="plan-badge pro">Pro</span></td>
+                                <td>300</td>
+                                <td>10,000</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td><span class="plan-badge enterprise">Enterprise</span></td>
+                                <td>1,000</td>
+                                <td>50,000</td>
+                                <td>100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rate-limit-headers">
+                    <h3>Headers de Respuesta</h3>
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span>Response Headers</span>
+                        </div>
+                        <pre><code class="language-http">X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 59
+X-RateLimit-Reset: 1640995200
+Retry-After: 60</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Endpoint -->
+            <section id="users" class="section">
+                <div class="section-header">
+                    <h2>Usuarios</h2>
+                    <p class="section-description">
+                        Gestiona los usuarios de tu programa de lealtad.
+                    </p>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="http-method get">GET</span>
+                        <span class="endpoint-url">/v2/users</span>
+                        <span class="endpoint-title">Listar usuarios</span>
+                    </div>
+                    
+                    <div class="endpoint-content">
+                        <p>Obtiene una lista paginada de todos los usuarios.</p>
+                        
+                        <h4>Parámetros de consulta</h4>
+                        <div class="parameters">
+                            <div class="parameter">
+                                <span class="param-name">page</span>
+                                <span class="param-type">integer</span>
+                                <span class="param-description">Número de página (por defecto: 1)</span>
+                            </div>
+                            <div class="parameter">
+                                <span class="param-name">limit</span>
+                                <span class="param-type">integer</span>
+                                <span class="param-description">Elementos por página (máximo: 100)</span>
+                            </div>
+                            <div class="parameter">
+                                <span class="param-name">search</span>
+                                <span class="param-type">string</span>
+                                <span class="param-description">Buscar por nombre o email</span>
+                            </div>
+                        </div>
+
+                        <h4>Ejemplo de respuesta</h4>
+                        <div class="code-example">
+                            <div class="code-header">
+                                <span>JSON</span>
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            </div>
+                            <pre><code class="language-json">{
+  "data": [
+    {
+      "id": "usr_1234567890",
+      "email": "usuario@ejemplo.com",
+      "name": "Juan Pérez",
+      "points_balance": 1250,
+      "tier": "gold",
+      "created_at": "2024-01-15T10:30:00Z",
+      "last_activity": "2024-03-10T14:45:00Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 156,
+    "total_pages": 8
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="http-method post">POST</span>
+                        <span class="endpoint-url">/v2/users</span>
+                        <span class="endpoint-title">Crear usuario</span>
+                    </div>
+                    
+                    <div class="endpoint-content">
+                        <p>Crea un nuevo usuario en el programa de lealtad.</p>
+                        
+                        <h4>Cuerpo de la petición</h4>
+                        <div class="code-example">
+                            <div class="code-header">
+                                <span>JSON</span>
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            </div>
+                            <pre><code class="language-json">{
+  "email": "nuevo@usuario.com",
+  "name": "María González",
+  "phone": "+573001234567",
+  "metadata": {
+    "source": "website",
+    "campaign": "launch2024"
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loyalty Programs -->
+            <section id="loyalty" class="section">
+                <div class="section-header">
+                    <h2>Programas de Lealtad</h2>
+                    <p class="section-description">
+                        Configura y gestiona tus programas de lealtad y niveles de usuarios.
+                    </p>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="http-method get">GET</span>
+                        <span class="endpoint-url">/v2/loyalty/programs</span>
+                        <span class="endpoint-title">Listar programas</span>
+                    </div>
+                    
+                    <div class="endpoint-content">
+                        <p>Obtiene todos los programas de lealtad activos.</p>
+                        
+                        <div class="code-example">
+                            <div class="code-header">
+                                <span>JSON Response</span>
+                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                            </div>
+                            <pre><code class="language-json">{
+  "data": [
+    {
+      "id": "prog_abc123",
+      "name": "Programa VIP",
+      "description": "Programa de lealtad para clientes frecuentes",
+      "tiers": [
+        {
+          "name": "bronze",
+          "min_points": 0,
+          "benefits": ["Envío gratis en compras > $50"]
+        },
+        {
+          "name": "silver", 
+          "min_points": 1000,
+          "benefits": ["Envío gratis", "5% descuento"]
+        },
+        {
+          "name": "gold",
+          "min_points": 5000,
+          "benefits": ["Envío gratis", "10% descuento", "Acceso prioritario"]
+        }
+      ],
+      "points_expiry_days": 365,
+      "status": "active"
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <p>&copy; 2024 Leal API. Todos los derechos reservados.</p>
+                    <div class="footer-links">
+                        <a href="#terms">Términos de Servicio</a>
+                        <a href="#privacy">Política de Privacidad</a>
+                        <a href="#support">Soporte</a>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

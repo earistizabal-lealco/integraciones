@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leal API - Documentación</title>
+    <meta name="description" content="API completas para gestión de puntos, redenciones y programa de fidelización para retail moderno">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="leal360-original.svg">
+    <link rel="alternate icon" type="image/png" href="leal-api-guide-main/src/assets/leal-logo-final.png">
+</head>
+<body>
+    <!-- Header simple y limpio -->
+    <header class="main-header simple">
+        <div class="header-content simple">
+            <div class="header-logo-section">
+                <img src="leal360-original.svg" alt="Leal 360" class="logo small" onclick="showSection('overview')" style="cursor: pointer;">
+            </div>
+            <nav class="header-tabs" id="headerTabs"></nav>
+            <div class="header-actions">
+                <!-- Espacio para futuras acciones -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <div class="main-app">
+        <!-- Sidebar Navigation -->
+        <nav class="main-sidebar" id="mainSidebar">
+            <!-- Botón para comprimir/expandir -->
+            <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Comprimir/Expandir sidebar">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            <div class="sidebar-nav" id="mainSidebarNav">
+                <!-- Navigation se carga dinámicamente -->
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content-area">
+            <div id="mainContent">
+                <!-- Contenido se carga dinámicamente -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuBtn" class="btn btn-primary" style="display: none; position: fixed; top: 1rem; left: 1rem; z-index: 100;">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Menú
+    </button>
+
+    <script src="script.js?v=3.8"></script>
+</body>
+</html>

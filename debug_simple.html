@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Simple</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Debug Simple - Leal 360</h1>
+    
+    <div id="test1" class="debug">Test 1: JavaScript básico...</div>
+    <div id="test2" class="debug">Test 2: DOMContentLoaded...</div>
+    <div id="test3" class="debug">Test 3: Elementos del DOM...</div>
+    <div id="test4" class="debug">Test 4: Script principal...</div>
+    
+    <div class="debug">
+        <h3>Manual Content Test</h3>
+        <div id="mainContent" style="border: 2px solid red; padding: 20px; min-height: 100px;">
+            Contenido debe aparecer aquí...
+        </div>
+        <button onclick="manualTest()">Render Manual</button>
+    </div>
+
+    <script>
+        console.log('=== DEBUG SCRIPT STARTED ===');
+        
+        // Test 1: JavaScript básico
+        document.getElementById('test1').innerHTML = 'Test 1: ✅ JavaScript funcionando';
+        document.getElementById('test1').className = 'debug success';
+        
+        // Test 2: DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded event fired');
+            document.getElementById('test2').innerHTML = 'Test 2: ✅ DOMContentLoaded disparado';
+            document.getElementById('test2').className = 'debug success';
+            
+            // Test 3: Elementos del DOM
+            const mainContent = document.getElementById('mainContent');
+            if (mainContent) {
+                document.getElementById('test3').innerHTML = 'Test 3: ✅ mainContent encontrado';
+                document.getElementById('test3').className = 'debug success';
+            } else {
+                document.getElementById('test3').innerHTML = 'Test 3: ❌ mainContent NO encontrado';
+                document.getElementById('test3').className = 'debug error';
+            }
+        });
+        
+        // Manual test function
+        function manualTest() {
+            console.log('Manual test started');
+            const content = document.getElementById('mainContent');
+            content.innerHTML = `
+                <div style="background: #f0f0f0; padding: 20px; border-radius: 8px;">
+                    <h2>✅ Render Manual Exitoso!</h2>
+                    <p>Este contenido fue renderizado manualmente.</p>
+                    <div style="background: #e0e0e0; padding: 10px; margin: 10px 0;">
+                        Simulando contenido del Overview...
+                    </div>
+                </div>
+            `;
+        }
+        
+        console.log('=== DEBUG SCRIPT LOADED ===');
+    </script>
+    
+    <!-- Script principal -->
+    <script>
+        console.log('Loading main script...');
+        
+        // Verificar si las funciones principales existen
+        setTimeout(() => {
+            const test4 = document.getElementById('test4');
+            let message = 'Test 4: ';
+            let className = 'debug ';
+            
+            if (typeof renderOverview === 'function') {
+                message += '✅ renderOverview existe';
+                className += 'success';
+            } else {
+                message += '❌ renderOverview NO existe';
+                className += 'error';
+            }
+            
+            test4.innerHTML = message;
+            test4.className = className;
+        }, 1000);
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>

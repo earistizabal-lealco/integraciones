@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Leal API - Documentación</title>
+    <meta name="description" content="API completas para gestión de puntos, redenciones y programa de fidelización para retail moderno">
+    <link rel="stylesheet" href="styles.css?v=1760000000">
+    <style>
+    /* FORCE CACHE BUST - Estilos inline para forzar cambios */
+    .module-info h3.module-title {
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+    }
+    
+    .module-content h3 {
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+    }
+    
+    /* FORCE OVERRIDE para cards con overlay oscuro */
+    .module-card .module-content h3 {
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+    }
+    
+    .module-card .module-info h3 {
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+    }
+    
+    /* Sobrescribir cualquier color blanco en títulos */
+    h3.module-title {
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+    }
+    
+    /* FORCE OVERRIDE MÁXIMO - Todos los títulos h3 */
+    h3 {
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+    }
+    
+    /* FORCE OVERRIDE para cualquier elemento con texto blanco */
+    .module-card * {
+        color: #1a1a1a !important;
+    }
+    
+    .module-card h1, .module-card h2, .module-card h3, .module-card h4, .module-card h5, .module-card h6 {
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+        text-shadow: none !important;
+    }
+    
+    .header-content.simple .header-tabs a {
+        color: #2d2d2d !important;
+        font-weight: 500 !important;
+    }
+    
+    .header-content.simple .header-tabs a:hover {
+        color: #1a1a1a !important;
+    }
+    
+    .header-content.simple .header-tabs a.active {
+        color: #1a1a1a !important;
+        font-weight: 600 !important;
+    }
+    
+    /* EXTENDER FONDO GRIS HACIA ARRIBA */
+    .value-proposition-section {
+        margin-top: -12rem !important;
+        padding-top: 10rem !important;
+        background: #f8f9fa !important;
+    }    
+    
+    /* FORCE GREY BACKGROUND - MÁS AGRESIVO */
+    body {
+        background: #f8f9fa !important;
+    }
+    .main-content-area {
+        background: #f8f9fa !important;
+    }
+    #mainContent {
+        background: #f8f9fa !important;
+    }
+    .overview-section, .overview-section * {
+        background: #f8f9fa !important;
+    }
+    .module-grid {
+        background: #f8f9fa !important;
+    }
+    .module-card {
+        background: white !important;
+        
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        
+    }    
+    /* FORCE EXTEND GRIS BACKGROUND BEHIND CARDS */
+    .overview-section {
+        background: #f8f9fa !important;
+        margin-bottom: 0 !important;
+    }
+    .overview-section .module-grid {
+        background: #f8f9fa !important;
+    }
+    .overview-section .module-card {
+        background: white !important;
+    }    /* FORCE OVERRIDE - Layout horizontal agresivo */
+    .value-proposition-section .value-description-wrapper {
+        display: flex !important;
+        flex-direction: row-reverse !important;
+        align-items: center !important;
+        gap: 2rem !important;
+        justify-content: space-between !important;
+        margin: 0 auto !important;
+        max-width: 1050px !important;
+        width: 100% !important;
+        min-height: 400px !important;
+    }
+    .value-proposition-section .value-description-text {
+        flex: 1 !important;
+        max-width: 450px !important;
+        text-align: left !important;
+        padding-right: 1.5rem; padding-left: 0 !important;
+        margin-right: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+    }
+    .value-proposition-section .value-secondary-copy {
+        font-size: 0.95rem !important;
+        line-height: 1.5 !important;
+        margin: 0 !important;
+    }
+    .value-proposition-section .value-visual-wrapper {
+        flex: 0 0 500px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 500px !important;
+        min-width: 500px !important;
+    }
+    .value-proposition-section .leal-360-visual {
+        width: 500px !important;
+        max-width: 500px !important;
+        min-width: 500px !important;
+        height: auto !important;
+        border-radius: 1rem !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        display: block !important;
+    }
+
+    /* Nueva sección de proceso de integración */
+    .integration-process-section {
+        padding: 4rem 2rem;
+        background: #ffffff;
+        margin: 0;
+    }
+
+    .integration-process-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .integration-main-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        color: #333;
+        margin-bottom: 3rem;
+        line-height: 1.2;
+    }
+
+    .integration-description-wrapper {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 2rem !important;
+        justify-content: space-between !important;
+        margin: 0 auto !important;
+        max-width: 1050px !important;
+        width: 100% !important;
+        min-height: 400px !important;
+    }
+
+    .integration-description-text {
+        flex: 1 !important;
+        max-width: 450px !important;
+        text-align: left !important;
+        padding-right: 1.5rem; padding-left: 0 !important;
+        margin-right: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+    }
+
+    .integration-copy {
+        font-size: 1.1rem !important;
+        color: #555 !important;
+        line-height: 1.6 !important;
+        margin: 0 !important;
+        text-align: left !important;
+    }
+
+    .integration-visual-wrapper {
+        flex: 0 0 500px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 500px !important;
+        min-width: 500px !important;
+    }
+
+    .integration-visual-placeholder {
+        width: 500px;
+        height: 350px;
+        border: 2px dashed #e5e7eb;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #f9fafb;
+        transition: all 0.3s ease;
+    }
+
+    .integration-visual-placeholder:hover {
+        border-color: #F7C52D;
+        background: #fefdfb;
+    }
+
+    .placeholder-content {
+        text-align: center;
+    }
+
+    .placeholder-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #6b7280;
+        margin: 1rem 0 0.5rem 0;
+    }
+
+    .placeholder-subtitle {
+
+    .integration-cta-wrapper {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .integration-cta-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 0.875rem 2rem;
+        background: #C4A430;
+        color: #333;
+        border: none;
+        border-radius: 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        box-shadow: none;
+        min-width: 180px;
+    }
+    .integration-cta-button:hover {
+        background: #B8981E;
+        transform: none;
+        box-shadow: none;
+    }
+    .integration-cta-button svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2.5;
+        transition: transform 0.2s ease;
+    }
+    .integration-cta-button:hover svg {
+        transform: translateX(2px);
+    }        color: #9ca3af;
+        font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+        .value-description-wrapper {
+            flex-direction: column !important;
+            gap: 2rem !important;
+            text-align: center !important;
+        }
+        .value-description-text {
+            max-width: 100% !important;
+        }
+        .value-visual-wrapper {
+            flex: none !important;
+            max-width: 400px !important;
+            margin: 0 auto !important;
+        }
+        
+        .integration-description-wrapper {
+            flex-direction: column !important;
+            gap: 2rem !important;
+            text-align: center !important;
+        }
+        
+        .integration-description-text {
+            text-align: center !important;
+            max-width: 100% !important;
+        }
+        
+        .integration-visual-wrapper {
+            flex: none !important;
+            max-width: 400px !important;
+            margin: 0 auto !important;
+        }
+        
+        .integration-visual-placeholder {
+            width: 100%;
+            height: 250px;
+        }
+    }
+    </style>
+    <link rel="icon" type="image/svg+xml" href="leal360-original.svg">
+    <link rel="alternate icon" type="image/png" href="leal-api-guide-main/src/assets/leal-logo-final.png">
+</head>
+<body>
+    <!-- Header simple y limpio -->
+    <header class="main-header simple">
+        <div class="header-content simple">
+            <div class="header-logo-section">
+                <img src="leal360-original.svg" alt="Leal 360" class="logo small" onclick="showSection('overview')" style="cursor: pointer;">
+            </div>
+            <nav class="header-tabs" id="headerTabs"></nav>
+            <div class="header-actions">
+                <!-- Espacio para futuras acciones -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <div class="main-app">
+        <!-- Sidebar Navigation -->
+        <nav class="main-sidebar" id="mainSidebar">
+            <!-- Botón para comprimir/expandir -->
+            <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Comprimir/Expandir sidebar">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            <div class="sidebar-nav" id="mainSidebarNav">
+                <!-- Navigation se carga dinámicamente -->
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content-area">
+            <div id="mainContent">
+                <!-- Contenido se carga dinámicamente -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuBtn" class="btn btn-primary" style="display: none; position: fixed; top: 1rem; left: 1rem; z-index: 100;">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Menú
+    </button>
+
+    <!-- Scripts de debugging removidos - aplicación funcionando -->
+    <script src="script.js?v=1759400000"></script>
+    
+    <!-- FORCE TITLE FIX - Script para forzar cambios en títulos -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Forzar todos los títulos h3 a negro
+        const titles = document.querySelectorAll('h3, .module-title, .module-content h3, .module-info h3');
+        titles.forEach(function(title) {
+            title.style.color = '#1a1a1a';
+            title.style.fontWeight = '700';
+            title.style.textShadow = 'none';
+        });
+        
+        // Forzar todos los elementos dentro de module-card
+        const moduleCards = document.querySelectorAll('.module-card');
+        moduleCards.forEach(function(card) {
+            const elements = card.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, div');
+            elements.forEach(function(element) {
+                element.style.color = '#1a1a1a';
+            });
+        });
+        
+        console.log('Títulos forzados a negro');
+    });
+    </script>
+</body>
+</html>

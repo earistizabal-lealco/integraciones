@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Módulos Leal 360</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 20px; 
+            font-family: Arial, sans-serif; 
+        }
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .module-card {
+            position: relative;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        .module-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .module-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(0.5px) brightness(0.7) contrast(1.1);
+            transition: all 0.3s ease;
+        }
+        .module-card:hover .module-background img {
+            filter: blur(0.3px) brightness(0.8) contrast(1.2);
+            transform: scale(1.05);
+        }
+        .module-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.8) 100%);
+        }
+        .module-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            color: white;
+        }
+        .module-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }
+        .module-description {
+            font-size: 0.875rem;
+            margin: 0 0 1rem 0;
+            opacity: 0.9;
+        }
+        .module-stats {
+            display: flex;
+            gap: 1rem;
+        }
+        .stat-item {
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test - Módulos de Leal 360</h1>
+    <p>Esta es una versión simplificada para verificar que las imágenes se cargan correctamente.</p>
+    
+    <div class="modules-grid">
+        <!-- CDP Module -->
+        <div class="module-card">
+            <div class="module-background">
+                <img src="Imágenes/close-up-of-businesswoman-using-smart-phone-and-la-2024-12-13-18-19-35-utc.jpg" alt="CDP Module" loading="lazy">
+            </div>
+            <div class="module-overlay"></div>
+            <div class="module-content">
+                <h3 class="module-title">CDP - Mis Clientes</h3>
+                <p class="module-description">Incrementa tu tasa de clientes identificados</p>
+                <div class="module-stats">
+                    <span class="stat-item">+85% identificación</span>
+                    <span class="stat-item">Vista 360°</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campaigns Module -->
+        <div class="module-card">
+            <div class="module-background">
+                <img src="Imágenes/crear-campañas-canales 3.png" alt="Campaigns Module" loading="lazy">
+            </div>
+            <div class="module-overlay"></div>
+            <div class="module-content">
+                <h3 class="module-title">Campañas</h3>
+                <p class="module-description">Aumenta la tasa de conversión de tus campañas</p>
+                <div class="module-stats">
+                    <span class="stat-item">Email + SMS</span>
+                    <span class="stat-item">+45% conversión</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice of Customer Module -->
+        <div class="module-card">
+            <div class="module-background">
+                <img src="Imágenes/happy-clients-buying-poke-bowl-2024-10-12-01-52-47-utc.jpg" alt="Voice of Customer Module" loading="lazy">
+            </div>
+            <div class="module-overlay"></div>
+            <div class="module-content">
+                <h3 class="module-title">Voz del Cliente</h3>
+                <p class="module-description">Mejora la experiencia del cliente y tu NPS por sucursal</p>
+                <div class="module-stats">
+                    <span class="stat-item">NPS tracking</span>
+                    <span class="stat-item">Feedback real-time</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Benefits Module -->
+        <div class="module-card">
+            <div class="module-background">
+                <img src="Imágenes/male-customer-paying-sales-assistant-in-fashion-st-2024-10-21-21-41-39-utc.jpg" alt="Benefits Module" loading="lazy">
+            </div>
+            <div class="module-overlay"></div>
+            <div class="module-content">
+                <h3 class="module-title">Beneficios</h3>
+                <p class="module-description">Aumenta la tasa de retención de tus clientes</p>
+                <div class="module-stats">
+                    <span class="stat-item">Programa puntos</span>
+                    <span class="stat-item">+60% retención</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p><strong>¿Se ven las imágenes correctamente?</strong></p>
+    <p><a href="/">← Volver a la aplicación principal</a></p>
+</body>
+</html>
