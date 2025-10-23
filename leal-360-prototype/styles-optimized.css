@@ -97,29 +97,19 @@ html, body {
   top: 0;
   z-index: 1000;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.header-left {
+.header-content {
   display: flex;
   align-items: center;
-  gap: 3rem;
+  gap: var(--space-md);
 }
 
 .header-logo {
-  height: 56px;
+  height: 40px;
   width: auto;
-}
-
-.header-logo .logo {
-  height: 100%;
-  width: auto;
-}
-
-.header-nav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
 }
 
 .header-title {
@@ -141,25 +131,25 @@ html, body {
 
 .nav-btn {
   background: transparent;
-  border: none;
-  color: #64748b;
-  padding: 0.5rem 0;
+  border: 1px solid var(--natural-gray-200);
+  color: var(--natural-gray-600);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
   transition: all 0.2s ease;
-  position: relative;
-  border-bottom: 2px solid transparent;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
 }
 
 .nav-btn:hover {
-  color: #1a202c;
+  background: var(--natural-gray-200);
+  color: var(--natural-black);
 }
 
 .nav-btn.active {
-  color: #1a202c;
-  font-weight: 600;
-  border-bottom-color: #FFD100;
+  background: var(--brand-yellow);
+  color: var(--natural-black);
+  border-color: var(--brand-yellow);
 }
 
 .mobile-menu-btn {
@@ -202,20 +192,24 @@ html, body {
     padding: var(--space-sm) var(--space-md);
   }
   
-  .header-left {
-    gap: 1.5rem;
+  .header-content {
+    gap: var(--space-sm);
   }
   
   .header-logo {
-    height: 48px;
+    height: 32px;
   }
   
-  .header-nav {
-    gap: 1rem;
+  .header-title {
+    font-size: var(--font-size-lg);
   }
   
-  .nav-btn {
-    font-size: 0.875rem;
+  .header-subtitle {
+    font-size: var(--font-size-xs);
+  }
+  
+  .nav-buttons {
+    display: none;
   }
   
   .mobile-menu-btn {
@@ -228,19 +222,13 @@ html, body {
     padding: var(--space-sm);
   }
   
-  .header-left {
-    gap: 1rem;
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
   }
   
-  .header-logo {
-    height: 44px;
-  }
-  
-  .header-nav {
-    gap: 0.75rem;
-  }
-  
-  .nav-btn {
-    font-size: 0.8125rem;
+  .header-title {
+    font-size: var(--font-size-base);
   }
 }

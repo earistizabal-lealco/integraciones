@@ -65,117 +65,89 @@ function renderOverview() {
   }
   
   console.log('✅ Elemento mainContent encontrado:', content);
-  console.log('📄 Contenido actual ANTES:', content.innerHTML.substring(0, 200) + '...');
   
   // Limpiar completamente el contenido
   content.innerHTML = '';
+  content.style.cssText = '';
   
-  // Forzar el reemplazo del contenido con estilos inline
-  content.style.cssText = 'position: relative; z-index: 10; background: #f8f9fa; min-height: 100vh;';
-  
-  // Implementar la vista Overview completa según el prompt
+  // Vista Overview completamente nueva
   content.innerHTML = `
-    <div class="overview-unified">
-      <!-- Sección 1: Copy principal con imagen de fondo -->
-      <section class="hero-section-bg">
-        <div class="hero-bg-image"></div>
+    <div class="overview-container">
+      <!-- Sección principal con imagen de fondo (70vh) -->
+      <section class="hero-section">
+        <div class="hero-background"></div>
         <div class="hero-content">
-          <h1 class="hero-main-title">
-            <span class="highlight-yellow">Centraliza</span> toda la data transaccional de tus usuarios en una sola plataforma, acciónala y conviértela en <span class="highlight-yellow">ingresos incrementales</span> con Leal 360
+          <h1 class="hero-title">
+            <span class="highlight">Centraliza</span> toda la data transaccional de tus usuarios en una sola plataforma,<br>
+            acciónala y conviértela en <span class="highlight">ingresos incrementales</span> con Leal 360
           </h1>
+          
+          <div class="agent-section">
+            <h2 class="agent-title">¿Tienes dudas sobre integraciones?</h2>
+            <p class="agent-subtitle">Pregúntale a nuestro agente inteligente sobre cualquier tema relacionado con las integraciones de Leal 360</p>
+            
+            <div class="agent-input-container">
+              <input type="text" id="agentInput" class="agent-input" placeholder="Escribe tu pregunta sobre integraciones..." onkeypress="handleAgentInput(event)" />
+              <button class="agent-send-btn" onclick="sendAgentMessage()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                </svg>
+                </button>
+              </div>
+          </div>
         </div>
       </section>
 
-      <!-- Sección 2: Agente de integraciones con imagen de fondo -->
-      <section class="agent-section-bg">
-        <div class="agent-bg-image"></div>
-        <div class="agent-content">
-          <h2 class="agent-title">¿Tienes dudas sobre integraciones?</h2>
-          <p class="agent-subtitle">Pregúntale a nuestro agente inteligente sobre cualquier tema relacionado con las integraciones de Leal 360</p>
-          
-          <div class="agent-input-wrapper">
-            <input type="text" id="agentInput" class="agent-input" placeholder="Escribe tu pregunta sobre integraciones..." />
-            <button class="agent-send-btn" onclick="sendAgentMessage()">
-              ${getIconSVG('send')}
-            </button>
-          </div>
-          
-          <div class="agent-chat" id="agentChatWindow">
-            <div class="chat-messages" id="chatMessages">
-              <div class="agent-message">
-                <div class="message-avatar">🤖</div>
-                <div class="message-content">
-                  <p>¡Hola! Soy tu asistente de integraciones. Puedo ayudarte con:</p>
-                  <ul>
-                    <li>Modalidades de integración (API, Agente, SFTP, Cajero Web)</li>
-                    <li>Compatibilidad con tu stack tecnológico</li>
-                    <li>Proceso de implementación</li>
-                    <li>Beneficios y ROI de Leal 360</li>
-                  </ul>
-                  <p>¿Qué te gustaría saber?</p>
-                </div>
+      <!-- Cards del proceso (mitad sobre imagen, mitad sobre gris) -->
+      <section class="process-cards">
+        <div class="cards-container">
+          <div class="process-card">
+            <div class="card-number">1</div>
+            <h3 class="card-title">Mapear ecosistema de data e integrar</h3>
+            <p class="card-description">Identificamos todas tus fuentes de datos y las conectamos con Leal 360 usando la modalidad más adecuada para tu infraestructura.</p>
+        </div>
+        
+          <div class="process-card">
+            <div class="card-number">2</div>
+            <h3 class="card-title">Accionar data desde la herramienta Leal 360</h3>
+            <p class="card-description">Activamos tus datos a través de campañas personalizadas, triggers automáticos y experiencias únicas para cada cliente.</p>
+            </div>
+            
+          <div class="process-card">
+            <div class="card-number">3</div>
+            <h3 class="card-title">Monitorea la evolución de tus ingresos y ROI</h3>
+            <p class="card-description">Medimos el impacto de cada acción y optimizamos continuamente para maximizar tus resultados.</p>
               </div>
             </div>
-          </div>
-        </div>
       </section>
 
-      <!-- Sección 3: Tarjetas de las tres etapas (mitad con imagen de fondo) -->
-      <section class="stages-section">
-        <div class="stages-bg-image"></div>
-        <div class="stages-content">
-          <div class="stage-card">
-            <div class="stage-number">1</div>
-            <div class="stage-info">
-              <h3 class="stage-title">Mapear ecosistema de data e integrar</h3>
-              <p class="stage-description">Identificamos todas tus fuentes de datos y las conectamos con Leal 360 usando la modalidad más adecuada para tu infraestructura.</p>
-            </div>
-          </div>
-          
-          <div class="stage-card">
-            <div class="stage-number">2</div>
-            <div class="stage-info">
-              <h3 class="stage-title">Accionar data desde la herramienta Leal 360</h3>
-              <p class="stage-description">Activamos tus datos a través de campañas personalizadas, triggers automáticos y experiencias únicas para cada cliente.</p>
-            </div>
-          </div>
-          
-          <div class="stage-card">
-            <div class="stage-number">3</div>
-            <div class="stage-info">
-              <h3 class="stage-title">Monitorea la evolución de tus ingresos y ROI</h3>
-              <p class="stage-description">Medimos el impacto de cada acción y optimizamos continuamente para maximizar tus resultados.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sección 4: Detalle de Leal 360 como herramienta (fondo gris) -->
-      <section class="leal-detail-section">
-        <div class="detail-wrapper">
-          <div class="detail-text">
-            <h2 class="detail-title">Centraliza toda tu data en un sólo lugar</h2>
-            <p class="detail-description">
+      <!-- Sección Leal 360 (fondo gris) -->
+      <section class="leal-section">
+        <div class="leal-container">
+          <div class="leal-text">
+            <h2 class="leal-title">Centraliza toda tu data en un sólo lugar</h2>
+            <p class="leal-description">
               Una plataforma integral con cuatro módulos para gestionar a tus clientes. Te ayuda a <strong>captar datos</strong> de tus clientes y <strong>segmentarlos</strong> según quiénes son, qué compran y cuándo. <strong>Actívalos</strong> automatizando campañas personalizadas por Email, SMS y WhatsApp. <strong>Mide la experiencia</strong> de tu cliente en cada sucursal. Recolecta y responde a su feedback. Y <strong>fidelíza a tus clientes</strong> con tu programa de puntos, cashback y promociones.
             </p>
-          </div>
-          <div class="detail-image">
+              </div>
+          <div class="leal-image">
             <img src="Assets Leal 360/General - Group 1171276518 copia.png" alt="Leal 360 Platform" />
           </div>
         </div>
       </section>
 
-      <!-- Sección 5: Beneficios de la integración (fondo gris) -->
+      <!-- Sección Beneficios (fondo gris) -->
       <section class="benefits-section">
-        <div class="benefits-wrapper">
+        <div class="benefits-container">
           <div class="benefits-image">
             <div class="integration-diagram">
               <div class="diagram-content">
                 <div class="diagram-title">Diagrama de Integración</div>
                 <div class="diagram-subtitle">Conecta todos tus sistemas con Leal 360</div>
+        </div>
               </div>
-            </div>
-          </div>
+              </div>
           <div class="benefits-text">
             <h2 class="benefits-title">Integra una vez, activa siempre</h2>
             <p class="benefits-description">
@@ -187,29 +159,190 @@ function renderOverview() {
 
       <!-- CTA Principal (fondo gris) -->
       <section class="cta-section">
-        <div class="cta-wrapper">
+        <div class="cta-container">
           <h2 class="cta-title">¿Listo para integrar Leal 360?</h2>
           <p class="cta-description">Comienza tu transformación digital y convierte tus datos en ingresos incrementales</p>
           <button class="cta-button" onclick="showSection('integrations')">
-            ${getIconSVG('layers')}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12,2 2,7 12,12 22,7 12,2"></polygon>
+              <polyline points="2,17 12,22 22,17"></polyline>
+              <polyline points="2,12 12,17 22,12"></polyline>
+            </svg>
             <span>Explorar Modalidades de Integración</span>
-          </button>
+              </button>
         </div>
       </section>
     </div>
   `;
   
-  console.log('📄 Contenido DESPUÉS:', content.innerHTML.substring(0, 200) + '...');
   console.log('✅ renderOverview() completado');
+}
+
+// Función para manejar el input del agente
+function handleAgentInput(event) {
+  if (event.key === 'Enter') {
+    sendAgentMessage();
+  }
+}
+
+// Función para crear ventana flotante del chat
+function createFloatingChat() {
+  // Remover chat existente si existe
+  const existingChat = document.getElementById('floatingChat');
+  if (existingChat) {
+    existingChat.remove();
+  }
+  
+  // Crear ventana flotante
+  const floatingChat = document.createElement('div');
+  floatingChat.id = 'floatingChat';
+  floatingChat.className = 'floating-chat';
+  floatingChat.innerHTML = `
+    <div class="chat-header">
+      <div class="header-content">
+        <img src="leal-logo-dark.png" alt="Leal 360" class="header-logo">
+        <h3>Agente de Integraciones Leal 360</h3>
+      </div>
+      <button class="close-chat" onclick="closeFloatingChat()">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+              <div class="agent-message">
+                <div class="message-avatar">
+                  🤖
+            </div>
+                <div class="message-content">
+                  <p>¡Hola! Soy tu asistente de integraciones Leal 360.</p>
+                  <p>¿En qué te puedo ayudar hoy?</p>
+                  <div class="quick-actions">
+                    <button class="action-btn" data-topic="modalidades">🔌 Modalidades</button>
+                    <button class="action-btn" data-topic="compatibilidad">⚙️ Compatibilidad</button>
+                    <button class="action-btn" data-topic="proceso">📋 Proceso</button>
+                    <button class="action-btn" data-topic="roi">💰 ROI</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(floatingChat);
+  
+  // Mostrar con animación
+  setTimeout(() => {
+    floatingChat.classList.add('show');
+  }, 10);
+  
+  // Agregar event listeners a los botones de acción rápida
+  setTimeout(() => {
+    const actionBtns = floatingChat.querySelectorAll('.action-btn');
+    actionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const topic = btn.getAttribute('data-topic');
+        handleQuickAction(topic);
+      });
+    });
+  }, 100);
+}
+
+// Función para cerrar ventana flotante
+function closeFloatingChat() {
+  const floatingChat = document.getElementById('floatingChat');
+  if (floatingChat) {
+    floatingChat.classList.remove('show');
+    setTimeout(() => {
+      floatingChat.remove();
+    }, 300);
+  }
+}
+
+// Función para manejar acciones rápidas
+function handleQuickAction(topic) {
+  const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
+  // Agregar mensaje del usuario
+  const userMessage = document.createElement('div');
+  userMessage.className = 'user-message';
+  userMessage.innerHTML = `
+    <div class="message-avatar">👤</div>
+    <div class="message-content">
+      <p>${getTopicText(topic)}</p>
+    </div>
+  `;
+  chatMessages.appendChild(userMessage);
+  
+  // Mostrar indicador de escritura
+  showTypingIndicator();
+  
+  // Simular respuesta del agente
+  setTimeout(() => {
+    removeTypingIndicator();
+    const agentResponse = document.createElement('div');
+    agentResponse.className = 'agent-message';
+    agentResponse.innerHTML = `
+      <div class="message-avatar">
+        🤖
+        </div>
+      <div class="message-content">
+        <p>${getAgentResponse(getTopicText(topic))}</p>
+        </div>
+    `;
+    chatMessages.appendChild(agentResponse);
+    
+    // Scroll al final del chat
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 1500);
+}
+
+// Función para obtener texto del tópico
+function getTopicText(topic) {
+  const topics = {
+    'modalidades': 'Modalidades de integración',
+    'compatibilidad': 'Compatibilidad técnica',
+    'proceso': 'Proceso de implementación',
+    'roi': 'ROI y beneficios'
+  };
+  return topics[topic] || topic;
+}
+
+// Función para mostrar indicador de escritura
+function showTypingIndicator() {
+  const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
+  const indicator = document.createElement('div');
+  indicator.className = 'typing-indicator';
+  indicator.id = 'typingIndicator';
+  indicator.innerHTML = `
+    <div class="message-avatar">🤖</div>
+    <div class="typing-dots">
+      <span></span><span></span><span></span>
+        </div>
+  `;
+  chatMessages.appendChild(indicator);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Función para remover indicador de escritura
+function removeTypingIndicator() {
+  const indicator = document.getElementById('typingIndicator');
+  if (indicator) {
+    indicator.remove();
+  }
 }
 
 // Función para manejar el agente de integraciones
 function sendAgentMessage() {
   const input = document.getElementById('agentInput');
-  const chatMessages = document.getElementById('chatMessages');
   const message = input.value.trim();
   
   if (!message) return;
+  
+  // Crear ventana flotante si no existe
+  let chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) {
+    createFloatingChat();
+    chatMessages = document.getElementById('chatMessages');
+  }
   
   // Agregar mensaje del usuario
   const userMessage = document.createElement('div');
@@ -218,28 +351,34 @@ function sendAgentMessage() {
     <div class="message-avatar">👤</div>
     <div class="message-content">
       <p>${message}</p>
-    </div>
+          </div>
   `;
   chatMessages.appendChild(userMessage);
   
   // Limpiar input
   input.value = '';
   
+  // Mostrar indicador de escritura
+  showTypingIndicator();
+  
   // Simular respuesta del agente
   setTimeout(() => {
+    removeTypingIndicator();
     const agentResponse = document.createElement('div');
     agentResponse.className = 'agent-message';
     agentResponse.innerHTML = `
-      <div class="message-avatar">🤖</div>
+      <div class="message-avatar">
+        🤖
+            </div>
       <div class="message-content">
         <p>${getAgentResponse(message)}</p>
-      </div>
-    `;
+    </div>
+  `;
     chatMessages.appendChild(agentResponse);
     
     // Scroll al final del chat
     chatMessages.scrollTop = chatMessages.scrollHeight;
-  }, 1000);
+  }, 1500);
 }
 
 function getAgentResponse(message) {

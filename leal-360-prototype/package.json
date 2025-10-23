@@ -1,0 +1,31 @@
+{
+  "name": "leal-360-prototype",
+  "version": "1.2.0",
+  "description": "Prototipo de la plataforma Leal 360 con vista Overview unificada y chat flotante",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'No build process needed for static files'",
+    "serve": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "leal-360",
+    "prototype",
+    "integrations",
+    "chat",
+    "responsive",
+    "frontend"
+  ],
+  "author": "Leal 360 Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:earistizabal-lealco/integraciones.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
