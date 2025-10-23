@@ -127,21 +127,12 @@ function renderIntegrationsMain() {
   const content = document.getElementById('mainContent');
   if (!content) return;
   
-  // Layout principal: sidebar + contenido
   content.innerHTML = `
     <div class="integrations-container">
-      <aside id="apiSidebar" class="api-sidebar"></aside>
-      <main id="apiContent" class="api-content">
-        <!-- Vista inicial con grid de todos los endpoints -->
-      </main>
+      <h1>Integraciones</h1>
+      <p>Sección de integraciones en desarrollo...</p>
     </div>
   `;
-  
-  // Renderizar sidebar
-  renderApiSidebar();
-  
-  // Renderizar vista inicial (grid de endpoints)
-  renderApiGrid();
 }
 
 function renderRecommender() {
