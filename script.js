@@ -170,45 +170,277 @@ function renderIntegrationsLanding() {
   
   content.innerHTML = `
     <div class="integrations-landing">
+      <!-- Hero Section -->
       <section class="integrations-hero">
         <div class="hero-content">
           <h1 class="hero-title">
-            Conecta tu negocio con <span class="highlight">Leal 360</span>
+            Captura la data transaccional de tus usuarios
           </h1>
           <p class="hero-subtitle">
-            Elige la modalidad de integración que mejor se adapte a tu infraestructura técnica
+            Elige la herramienta de integración que mejor se adapte a tu 
+            infraestructura tecnológica para convertir data en ingresos incrementales
           </p>
         </div>
       </section>
-
-      <section class="integrations-grid-section">
-        <div class="integration-types-grid">
-          ${Object.values(INTEGRATION_TYPES).map(integration => `
-            <div class="integration-card ${integration.status}" onclick="${integration.status === 'available' ? 'showApiDocumentation()' : `showComingSoon('${integration.id}')`}">
-              <div class="card-header">
-                <div class="card-icon-wrapper">
-                  ${getIntegrationIcon(integration.id)}
+      
+      <!-- Flujo del Ecosistema -->
+      <section class="ecosystem-flow">
+        <h2>¿Cómo funciona el ecosistema Leal 360?</h2>
+        
+        <div class="flow-diagram">
+          <!-- Paso 1: Data Transaccional -->
+          <div class="flow-step">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <h3>Data Transaccional</h3>
+            <p>Compras, usuarios, productos</p>
+            <ul class="step-sources">
+              <li>Apps móviles</li>
+              <li>Páginas web</li>
+              <li>Puntos de venta</li>
+              <li>E-commerce</li>
+            </ul>
+          </div>
+          
+          <div class="flow-arrow">→</div>
+          
+          <!-- Paso 2: Integración -->
+          <div class="flow-step highlight">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+              </svg>
+            </div>
+            <h3>Integración</h3>
+            <p>Captura de datos</p>
+            <ul class="step-methods">
+              <li>API REST</li>
+              <li>Agent</li>
+              <li>SFTP</li>
+              <li>Cajero Web</li>
+            </ul>
+          </div>
+          
+          <div class="flow-arrow">→</div>
+          
+          <!-- Paso 3: Servicios Leal -->
+          <div class="flow-step">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+                <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+                <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+              </svg>
+            </div>
+            <h3>Servicios Leal 360</h3>
+            <p>Gestión y activación</p>
+            <ul class="step-services">
+              <li>Registro de usuarios</li>
+              <li>Acumulación de puntos</li>
+              <li>Canje de recompensas</li>
+              <li>Gestión de promociones</li>
+            </ul>
+          </div>
+          
+          <div class="flow-arrow">→</div>
+          
+          <!-- Paso 4: Ecosistema -->
+          <div class="flow-step">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 3v18h18"/>
+                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                <circle cx="18" cy="6" r="2"/>
+              </svg>
+            </div>
+            <h3>Ingresos Incrementales</h3>
+            <p>Resultados del negocio</p>
+            <ul class="step-results">
+              <li>Mayor frecuencia de compra</li>
+              <li>Ticket promedio más alto</li>
+              <li>Retención de clientes</li>
+              <li>Insights accionables</li>
+            </ul>
+          </div>
         </div>
-                <span class="status-badge ${integration.status}">
-                  ${integration.status === 'available' ? 'Disponible' : 'Próximamente'}
-                </span>
-          </div>
-          
-              <div class="card-body">
-                <h3 class="card-title">${integration.name}</h3>
-                <p class="card-description">${integration.description}</p>
-                ${getIntegrationFeatures(integration.id)}
-          </div>
-          
-              <div class="card-footer">
-                <button class="card-action-btn ${integration.status === 'available' ? 'primary' : 'secondary'}">
-                  ${integration.status === 'available' ? 'Ver documentación' : 'Notifícame'}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
+        
+        <div class="flow-callout">
+          <p>
+            <strong>La integración es el puente</strong> que conecta tu data 
+            transaccional con el ecosistema Leal 360 para convertirla en 
+            ingresos incrementales
+          </p>
+        </div>
+      </section>
+      
+      <!-- Tabla Comparativa -->
+      <section class="comparison-section">
+        <h2>¿Qué tipo de integración necesitas?</h2>
+        <p class="section-subtitle">
+          Depende de tu POS y stack tecnológico. Compara las opciones:
+        </p>
+        
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th class="criteria-column">Criterio</th>
+                <th class="integration-column api">API REST</th>
+                <th class="integration-column agent">Agent</th>
+                <th class="integration-column sftp">SFTP</th>
+                <th class="integration-column cashier">Cajero Web</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Quién conecta -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>¿Quién conecta?</strong>
+                </td>
+                <td>Comercio/Leal</td>
+                <td>Leal</td>
+                <td>Comercio/Leal</td>
+                <td>Leal</td>
+              </tr>
+              
+              <!-- Qué necesitamos -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>¿Qué necesitamos?</strong>
+                </td>
+                <td>Comercio consume Leal</td>
+                <td>Instalación con conexiones locales</td>
+                <td>Archivo CSV</td>
+                <td>Compartir URL y credenciales</td>
+              </tr>
+              
+              <!-- Esfuerzo técnico -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>Esfuerzo técnico</strong>
+                </td>
+                <td><span class="effort-badge high">Alto para el cliente</span></td>
+                <td><span class="effort-badge low">Bajo</span></td>
+                <td><span class="effort-badge medium">Medio</span></td>
+                <td><span class="effort-badge none">-</span></td>
+              </tr>
+              
+              <!-- Cuándo recomendado -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>¿Cuándo se recomienda?</strong>
+                </td>
+                <td>
+                  Tiene capacidades de desarrollo<br>
+                  POS propio
+                </td>
+                <td>Solo si está en lista de POS</td>
+                <td>
+                  Sin capacidades técnicas o<br>
+                  si es difícil para ellos
+                </td>
+                <td>
+                  Sin capacidades técnicas,<br>
+                  pocos POS, o busca<br>
+                  plug-and-play sin importar POS
+                </td>
+              </tr>
+              
+              <!-- Funcionalidades -->
+              <tr class="section-header">
+                <td colspan="5"><strong>Funcionalidades Disponibles</strong></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Registro (web/app - tiempo real)</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (cashier, Landing, APP)</td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Acumulación</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span> (No tiempo real)</td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Redención</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (Cashier)</td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Cancelación</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (Customer Service Leal)</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (Customer Service Leal)</td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Integración E-commerce</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Canje de monedas</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Registro de SKUs</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="partial">◐</span> (algunos)</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="comparison-cta">
+          <p>¿Aún no sabes cuál elegir?</p>
+          <button class="cta-button" onclick="showDecisionWizard()">
+            Te ayudamos a decidir
+          </button>
+        </div>
+      </section>
+      
+      <!-- Cards de Integración Simplificadas -->
+      <section class="integration-cards-section">
+        <h2>Explora cada tipo de integración</h2>
+        
+        <div class="integration-cards-grid">
+          ${Object.values(INTEGRATION_TYPES).filter(integration => integration.id !== 'mcp').map(integration => `
+            <div class="integration-card-simple ${integration.status}" onclick="${integration.status === 'available' ? 'showApiDocumentation()' : `showComingSoon('${integration.id}')`}">
+              <div class="card-icon-simple">
+                ${getIntegrationIcon(integration.id)}
+              </div>
+              <h3>${integration.name}</h3>
+              <p>${integration.description}</p>
+              <button class="card-action-simple ${integration.status === 'available' ? 'primary' : 'secondary'}">
+                ${integration.status === 'available' ? 'Ver documentación' : 'Notifícame'}
               </button>
             </div>
-          </div>
           `).join('')}
         </div>
       </section>
@@ -385,6 +617,132 @@ function getIntegrationFeatures(type) {
     </ul>`
   };
   return features[type] || '';
+}
+
+// Wizard de decisión para ayudar a elegir integración
+function showDecisionWizard() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-container decision-wizard">
+      <button class="modal-close" onclick="closeDecisionWizard()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      
+      <div class="wizard-header">
+        <h2>Te ayudamos a elegir la mejor integración</h2>
+        <p>Responde estas preguntas para encontrar la opción ideal</p>
+      </div>
+      
+      <div class="wizard-content">
+        <div class="wizard-step active" id="step1">
+          <h3>¿Qué tipo de negocio tienes?</h3>
+          <div class="wizard-options">
+            <button class="wizard-option" onclick="nextWizardStep('retail')">
+              <div class="option-icon">🏪</div>
+              <div class="option-text">
+                <strong>Tienda física</strong>
+                <span>Restaurante, retail, farmacia</span>
+              </div>
+            </button>
+            <button class="wizard-option" onclick="nextWizardStep('online')">
+              <div class="option-icon">🌐</div>
+              <div class="option-text">
+                <strong>E-commerce</strong>
+                <span>Tienda online, marketplace</span>
+              </div>
+            </button>
+            <button class="wizard-option" onclick="nextWizardStep('enterprise')">
+              <div class="option-icon">🏢</div>
+              <div class="option-text">
+                <strong>Empresa grande</strong>
+                <span>Múltiples ubicaciones, ERP</span>
+              </div>
+            </button>
+            <button class="wizard-option" onclick="nextWizardStep('developer')">
+              <div class="option-icon">💻</div>
+              <div class="option-text">
+                <strong>Soy desarrollador</strong>
+                <span>Quiero control total</span>
+              </div>
+            </button>
+          </div>
+        </div>
+        
+        <div class="wizard-step" id="step2" style="display: none;">
+          <h3>¿Tienes equipo técnico?</h3>
+          <div class="wizard-options">
+            <button class="wizard-option" onclick="nextWizardStep('yes')">
+              <div class="option-icon">✅</div>
+              <div class="option-text">
+                <strong>Sí, tengo equipo técnico</strong>
+                <span>Desarrolladores o IT</span>
+              </div>
+            </button>
+            <button class="wizard-option" onclick="nextWizardStep('no')">
+              <div class="option-icon">❌</div>
+              <div class="option-text">
+                <strong>No, sin equipo técnico</strong>
+                <span>Busco solución simple</span>
+              </div>
+            </button>
+          </div>
+        </div>
+        
+        <div class="wizard-result" id="wizardResult" style="display: none;">
+          <div class="result-content">
+            <h3>Recomendación: <span id="recommendedIntegration"></span></h3>
+            <p id="recommendationReason"></p>
+            <button class="cta-button" onclick="closeDecisionWizard()">
+              Ver detalles
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function closeDecisionWizard() {
+  const modal = document.querySelector('.modal-overlay');
+  if (modal) modal.remove();
+}
+
+function nextWizardStep(choice) {
+  // Lógica simple de decisión
+  let recommendation = '';
+  let reason = '';
+  
+  if (choice === 'developer') {
+    recommendation = 'API REST';
+    reason = 'Perfecto para desarrolladores que quieren control total y flexibilidad máxima.';
+  } else if (choice === 'retail') {
+    recommendation = 'Cajero Web';
+    reason = 'Ideal para tiendas físicas sin equipo técnico. Plug & play simple.';
+  } else if (choice === 'online') {
+    recommendation = 'SFTP';
+    reason = 'Excelente para e-commerce. Transferencia segura de archivos batch.';
+  } else if (choice === 'enterprise') {
+    recommendation = 'API REST';
+    reason = 'Para empresas grandes con equipo técnico y necesidades complejas.';
+  } else if (choice === 'yes') {
+    recommendation = 'API REST';
+    reason = 'Con equipo técnico, API REST te da la máxima flexibilidad.';
+  } else if (choice === 'no') {
+    recommendation = 'Cajero Web';
+    reason = 'Sin equipo técnico, Cajero Web es la opción más simple.';
+  }
+  
+  // Mostrar resultado
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('wizardResult').style.display = 'block';
+  document.getElementById('recommendedIntegration').textContent = recommendation;
+  document.getElementById('recommendationReason').textContent = reason;
 }
 
 function renderIntegrationsMain() {

@@ -1,5 +1,5 @@
 /* =========================
-   LANDING DE INTEGRACIONES PROFESIONAL
+   LANDING DE INTEGRACIONES EDUCATIVO
    ========================= */
 
 /* Variables de color consistentes con Overview */
@@ -495,5 +495,584 @@
   
   .modal-body {
     padding: 1.5rem;
+  }
+}
+
+/* =========================
+   FLUJO DEL ECOSISTEMA
+   ========================= */
+.ecosystem-flow {
+  padding: 4rem 2rem;
+  background: white;
+}
+
+.ecosystem-flow h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.flow-diagram {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 3rem auto;
+  flex-wrap: wrap;
+}
+
+.flow-step {
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+  background: #f8f9fa;
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.flow-step:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.flow-step.highlight {
+  background: #fff9e6;
+  border-color: var(--accent-yellow);
+  border-width: 3px;
+}
+
+.flow-step .step-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  color: var(--text-secondary);
+}
+
+.flow-step.highlight .step-icon {
+  color: var(--accent-yellow);
+}
+
+.flow-step h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 1rem 0 0.5rem;
+}
+
+.flow-step p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.flow-step ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.flow-step ul li {
+  padding: 0.375rem 0;
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.flow-step ul li:before {
+  content: "•";
+  color: var(--accent-yellow);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.flow-arrow {
+  font-size: 2rem;
+  color: #cbd5e0;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.flow-callout {
+  background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 800px;
+  margin: 3rem auto 0;
+}
+
+.flow-callout strong {
+  color: var(--accent-yellow);
+}
+
+/* =========================
+   TABLA COMPARATIVA
+   ========================= */
+.comparison-section {
+  padding: 4rem 2rem;
+  background: var(--background);
+}
+
+.comparison-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+}
+
+.comparison-table-wrapper {
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.comparison-table {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.comparison-table thead {
+  background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+  color: white;
+}
+
+.comparison-table th {
+  padding: 1.5rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.comparison-table th.criteria-column {
+  width: 20%;
+  min-width: 180px;
+}
+
+.comparison-table th.integration-column {
+  width: 20%;
+  text-align: center;
+}
+
+.comparison-table th.api {
+  background: rgba(255, 209, 0, 0.1);
+}
+
+.comparison-table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.comparison-table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.comparison-table td {
+  padding: 1.25rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.comparison-table td.criteria-cell {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.comparison-table tr.section-header td {
+  background: #edf2f7;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 1rem;
+}
+
+/* Badges y elementos */
+.effort-badge {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.effort-badge.high {
+  background: #fee;
+  color: #c53030;
+}
+
+.effort-badge.medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.effort-badge.low {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.effort-badge.none {
+  background: #f7fafc;
+  color: #718096;
+}
+
+.check {
+  color: #10b981;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.cross {
+  color: #ef4444;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.partial {
+  color: #f59e0b;
+  font-size: 1.25rem;
+}
+
+.comparison-cta {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+}
+
+.comparison-cta p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.cta-button {
+  padding: 1rem 2rem;
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background: var(--accent-yellow-hover);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   CARDS SIMPLIFICADAS
+   ========================= */
+.integration-cards-section {
+  padding: 4rem 2rem;
+  background: white;
+}
+
+.integration-cards-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+}
+
+.integration-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.integration-card-simple {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.integration-card-simple:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.integration-card-simple.available {
+  border-color: var(--accent-yellow);
+  border-width: 2px;
+}
+
+.integration-card-simple .card-icon-simple {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  color: var(--text-secondary);
+}
+
+.integration-card-simple.available .card-icon-simple {
+  color: var(--accent-yellow);
+}
+
+.integration-card-simple h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.integration-card-simple p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.card-action-simple {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-action-simple.primary {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+}
+
+.card-action-simple.primary:hover {
+  background: var(--accent-yellow-hover);
+  transform: translateY(-1px);
+}
+
+.card-action-simple.secondary {
+  background: var(--coming-soon-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+.card-action-simple.secondary:hover {
+  background: #edf2f7;
+}
+
+/* =========================
+   WIZARD DE DECISIÓN
+   ========================= */
+.decision-wizard {
+  max-width: 600px;
+}
+
+.wizard-header {
+  text-align: center;
+  padding: 2rem 2rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.wizard-header h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.wizard-header p {
+  color: var(--text-secondary);
+}
+
+.wizard-content {
+  padding: 2rem;
+}
+
+.wizard-step h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.wizard-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.wizard-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.wizard-option:hover {
+  border-color: var(--accent-yellow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.option-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.option-text {
+  flex: 1;
+}
+
+.option-text strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.option-text span {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.wizard-result {
+  text-align: center;
+  padding: 2rem;
+}
+
+.result-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.result-content p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+@media (max-width: 1024px) {
+  .flow-diagram {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .comparison-table {
+    font-size: 0.8125rem;
+  }
+  
+  .wizard-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ecosystem-flow {
+    padding: 3rem 1.5rem;
+  }
+  
+  .ecosystem-flow h2 {
+    font-size: 2rem;
+  }
+  
+  .flow-step {
+    max-width: 100%;
+  }
+  
+  .comparison-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .comparison-section h2 {
+    font-size: 2rem;
+  }
+  
+  .comparison-table-wrapper {
+    overflow-x: scroll;
+  }
+  
+  .comparison-table {
+    min-width: 800px;
+  }
+  
+  .integration-cards-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .integration-cards-section h2 {
+    font-size: 2rem;
+  }
+  
+  .integration-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .wizard-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ecosystem-flow {
+    padding: 2rem 1rem;
+  }
+  
+  .flow-step {
+    padding: 1.5rem 1rem;
+  }
+  
+  .comparison-section {
+    padding: 2rem 1rem;
+  }
+  
+  .integration-cards-section {
+    padding: 2rem 1rem;
+  }
+  
+  .wizard-content {
+    padding: 1rem;
+  }
+  
+  .wizard-option {
+    padding: 1rem;
   }
 }
