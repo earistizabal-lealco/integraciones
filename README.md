@@ -1,177 +1,145 @@
-# Leal API Guide - Documentación Interactiva
+# Leal 360 - Prototipo de Integraciones
 
-Este proyecto es una réplica de la documentación de la API de Leal, creada con HTML, CSS y JavaScript vanilla para proporcionar una experiencia de documentación moderna e interactiva.
+## Descripción
+Prototipo interactivo de la plataforma Leal 360, incluyendo:
+- Vista Overview con hero section y agente inteligente
+- Vista de Integraciones con documentación de API completa
+- Tabla comparativa de tipos de integración
+- Documentación funcional de endpoints API
 
-## 🚀 Características
-
-- **Diseño Moderno**: Interfaz limpia y profesional inspirada en las mejores prácticas de documentación de APIs
-- **Navegación Intuitiva**: Sidebar con navegación suave y scroll spy automático
-- **Búsqueda en Tiempo Real**: Búsqueda instantánea en toda la documentación
-- **Ejemplos de Código**: Bloques de código con resaltado de sintaxis y botones de copia
-- **Responsive**: Completamente adaptado para dispositivos móviles y tablets
-- **Interactividad**: Funcionalidades JavaScript avanzadas para mejorar la experiencia del usuario
-
-## 📂 Estructura del Proyecto
-
+## Estructura del Proyecto
 ```
-Integraciones V0/
-├── index.html          # Página principal con la documentación
-├── styles.css          # Estilos CSS modernos y responsive
-├── script.js           # Funcionalidad JavaScript interactiva
-└── README.md           # Este archivo
-```
-
-## 🛠️ Tecnologías Utilizadas
-
-- **HTML5**: Estructura semántica y accesible
-- **CSS3**: 
-  - Variables CSS personalizadas
-  - Grid y Flexbox para layouts
-  - Animaciones y transiciones suaves
-  - Diseño responsive con mobile-first
-- **JavaScript ES6+**:
-  - Navegación suave (smooth scrolling)
-  - Búsqueda en tiempo real
-  - Scroll spy automático
-  - API de Clipboard para copiar código
-  - Intersection Observer para animaciones
-- **Librerías Externas**:
-  - [Prism.js](https://prismjs.com/) para resaltado de sintaxis
-  - [Google Fonts](https://fonts.google.com/) (Inter) para tipografía
-
-## 🎨 Características de Diseño
-
-### Sistema de Colores
-- **Primario**: `#6366f1` (Índigo)
-- **Secundario**: `#f1f5f9` (Gris claro)
-- **Éxito**: `#10b981` (Verde)
-- **Advertencia**: `#f59e0b` (Ámbar)
-- **Error**: `#ef4444` (Rojo)
-
-### Tipografía
-- **Familia Principal**: Inter (Google Fonts)
-- **Código**: SF Mono, Monaco, Cascadia Code, Roboto Mono
-
-### Componentes
-- **Sidebar**: Navegación fija con scroll independiente
-- **Feature Cards**: Tarjetas con efectos hover
-- **Code Blocks**: Bloques de código con botones de copia
-- **Endpoints**: Documentación de API con métodos HTTP
-- **Tables**: Tablas responsive para limits de rate
-
-## 📱 Funcionalidades Móviles
-
-- **Menú Hamburguesa**: Navegación optimizada para pantallas pequeñas
-- **Touch Gestures**: Soporte completo para gestos táctiles
-- **Viewport Adaptation**: Layouts que se adaptan automáticamente
-
-## ⌨️ Atajos de Teclado
-
-- **Ctrl/Cmd + K**: Enfocar barra de búsqueda
-- **Escape**: Cerrar menú móvil o limpiar búsqueda
-
-## 🔧 Funcionalidades JavaScript
-
-### Navegación
-- Scroll suave entre secciones
-- Actualización automática de la URL
-- Scroll spy para highlighting automático
-
-### Búsqueda
-- Filtrado en tiempo real de la navegación
-- Búsqueda por contenido y títulos de sección
-- Debouncing para optimizar rendimiento
-
-### Interactividad
-- Botones de copia de código con feedback visual
-- Animaciones de entrada basadas en Intersection Observer
-- Manejo responsive automático
-
-### Optimizaciones
-- Lazy loading de animaciones
-- Debouncing en eventos de resize
-- Error handling robusto
-
-## 🌐 Cómo Usar
-
-1. **Abrir el proyecto**: Simplemente abre `index.html` en tu navegador
-2. **Navegación**: Usa el sidebar para navegar entre secciones
-3. **Búsqueda**: Escribe en la barra de búsqueda para filtrar contenido
-4. **Copiar Código**: Haz clic en "Copiar" en cualquier bloque de código
-5. **Mobile**: En dispositivos móviles, usa el botón de menú para abrir la navegación
-
-## 🎯 Secciones Incluidas
-
-- **Introducción**
-  - Visión General
-  - Autenticación
-  - Límites de Velocidad
-
-- **Endpoints**
-  - Usuarios
-  - Programas de Lealtad
-  - Puntos
-  - Recompensas
-  - Transacciones
-
-- **Webhooks**
-  - Configuración
-  - Eventos
-
-- **SDK**
-  - JavaScript
-  - Python
-  - PHP
-
-## 🔧 Personalización
-
-### Colores
-Modifica las variables CSS en `:root` para cambiar el esquema de colores:
-
-```css
-:root {
-  --primary-color: #6366f1;
-  --secondary-color: #f1f5f9;
-  /* ... más variables */
-}
+/leal-360-prototype/
+  ├── index.html                    # Página principal
+  ├── script.js                     # Lógica principal
+  ├── styles.css                    # Estilos globales
+  ├── overview-styles.css          # Estilos de Overview
+  ├── integrations-styles.css      # Estilos de Integraciones
+  ├── integrations-landing-styles.css # Estilos de landing de integraciones
+  ├── api-data.js                   # Datos de endpoints API
+  ├── api-components.js            # Componentes de documentación API
+  ├── package.json                 # Configuración del proyecto
+  └── config.json                  # Configuración adicional
 ```
 
-### Contenido
-- Edita `index.html` para modificar el contenido de la documentación
-- Añade nuevas secciones siguiendo la estructura existente
-- Actualiza los enlaces de navegación en el sidebar
+## Características Principales
 
-### Funcionalidad
-- Modifica `script.js` para añadir nuevas funcionalidades
-- Los eventos están modularizados para fácil extensión
+### Vista Overview
+- Hero section con imagen de fondo
+- Agente inteligente con chat flotante
+- Sección de beneficios de Leal 360
+- Flujo del ecosistema de integraciones
+- Call-to-action para explorar integraciones
 
-## 📈 Rendimiento
+### Vista de Integraciones
+- Landing page con tipos de integración
+- Documentación completa de API REST
+- Tabla comparativa de funcionalidades
+- Navegación intuitiva entre secciones
 
-- **Tiempo de Carga**: Optimizado para carga rápida
-- **Lazy Loading**: Animaciones y elementos pesados se cargan según necesidad
-- **Debouncing**: Eventos de alta frecuencia optimizados
-- **CSS Optimizado**: Uso eficiente de Grid, Flexbox y variables CSS
+### Documentación de API
+- Endpoints organizados por categorías
+- Ejemplos de código (cURL, Request Body, Response)
+- Testing interactivo de endpoints
+- Parámetros y respuestas detalladas
 
-## 🔍 SEO y Accesibilidad
+## Instalación Local
 
-- **HTML Semántico**: Estructura accesible para lectores de pantalla
-- **Meta Tags**: Configuración básica para SEO
-- **Keyboard Navigation**: Soporte completo para navegación por teclado
-- **Focus States**: Estados de foco visibles y consistentes
+### Prerrequisitos
+- Python 3.x (para servidor local)
+- Git
 
-## 🚀 Extensiones Futuras
+### Pasos
+1. **Clonar el repositorio:**
+   ```bash
+   git clone git@github.com:earistizabal-lealco/integraciones.git
+   cd integraciones
+   ```
 
-- [ ] Modo oscuro/claro
-- [ ] Ejemplos de API interactivos
-- [ ] Búsqueda global avanzada
-- [ ] Exportación a PDF
-- [ ] Múltiples idiomas
-- [ ] Comentarios y feedback
+2. **Navegar al directorio del prototipo:**
+   ```bash
+   cd leal-360-prototype
+   ```
 
-## 📄 Licencia
+3. **Servir localmente:**
+   ```bash
+   python3 -m http.server 8000
+   ```
 
-Este proyecto es una réplica educativa basada en la documentación de Leal API disponible públicamente.
+4. **Abrir en navegador:**
+   ```
+   http://localhost:8000
+   ```
 
----
+## URL de Producción
+[URL de GitHub Pages se configurará]
 
-**Desarrollado con ❤️ como réplica del proyecto de [Lovable](https://preview--leal-api-guide.lovable.app/)**
+## Tecnologías Utilizadas
+- **HTML5** - Estructura semántica
+- **CSS3** - Estilos modernos y responsive
+- **JavaScript (Vanilla)** - Lógica sin dependencias
+- **Git** - Control de versiones
+
+## Desarrollo
+
+### Estructura de Commits
+- `feat:` - Nueva funcionalidad
+- `fix:` - Corrección de bugs
+- `style:` - Cambios de estilos
+- `docs:` - Documentación
+- `refactor:` - Refactorización de código
+
+### Hacer Cambios
+1. **Crear una rama nueva:**
+   ```bash
+   git checkout -b feature/nombre-del-cambio
+   ```
+
+2. **Hacer cambios y commit:**
+   ```bash
+   git add .
+   git commit -m "feat: descripción del cambio"
+   ```
+
+3. **Subir rama:**
+   ```bash
+   git push origin feature/nombre-del-cambio
+   ```
+
+4. **Crear Pull Request en GitHub**
+
+### Cache Busting
+Al hacer cambios en CSS/JS, actualizar el timestamp en `index.html`:
+```html
+<link rel="stylesheet" href="styles.css?v=2025-10-08-XX-XX">
+```
+
+## Funcionalidades Implementadas
+
+### ✅ Completadas
+- [x] Vista Overview con hero section
+- [x] Agente inteligente con chat flotante
+- [x] Vista de integraciones con landing page
+- [x] Documentación completa de API REST
+- [x] Tabla comparativa de tipos de integración
+- [x] Navegación entre secciones
+- [x] Diseño responsive
+- [x] Estructura modular de archivos
+
+### 🔄 En Desarrollo
+- [ ] Funcionalidad completa del agente inteligente
+- [ ] Más endpoints en la documentación API
+- [ ] Optimización del hero copy en 2 líneas
+
+### 📋 Pendientes
+- [ ] Implementar integraciones SFTP
+- [ ] Implementar integraciones Cajero Web
+- [ ] Implementar marketplace de integraciones
+- [ ] Testing automatizado
+
+## Contacto
+- **Repositorio:** [GitHub](https://github.com/earistizabal-lealco/integraciones)
+- **Equipo:** Leal 360 Development Team
+
+## Licencia
+Proyecto interno de Leal 360
