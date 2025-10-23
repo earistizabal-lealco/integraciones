@@ -7,6 +7,47 @@ const mainNavigation = [
   { id: 'recommender', title: 'Recomendador', icon: 'help-circle' }
 ];
 
+// Datos de tipos de integración
+const INTEGRATION_TYPES = {
+  'api': {
+    id: 'api',
+    name: 'API REST',
+    icon: '📡',
+    status: 'available',
+    description: 'Documentación completa de endpoints',
+    action: 'showApiDocumentation'
+  },
+  'cajero-web': {
+    id: 'cajero-web',
+    name: 'Cajero Web',
+    icon: '🖥️',
+    status: 'coming-soon',
+    description: 'Integración sin código para puntos de venta'
+  },
+  'sftp': {
+    id: 'sftp',
+    name: 'SFTP',
+    icon: '📁',
+    status: 'coming-soon',
+    description: 'Transferencia segura de archivos'
+  },
+  'marketplace': {
+    id: 'marketplace',
+    name: 'Marketplace',
+    icon: '🏪',
+    status: 'coming-soon',
+    description: 'Integraciones con ERPs y CRMs populares'
+  },
+  'mcp': {
+    id: 'mcp',
+    name: 'MCP - Model Context Protocol',
+    icon: '🤖',
+    status: 'coming-soon',
+    description: 'Integración IA con Leal Ecosystem',
+    highlight: true
+  }
+};
+
 function initializeApp() {
   showSection('overview');
 }
@@ -24,7 +65,7 @@ function showSection(sectionId) {
   if (sectionId === 'overview') {
     renderOverview();
   } else if (sectionId === 'integrations') {
-    renderIntegrationsMain();
+    renderIntegrationsLanding();
   } else if (sectionId === 'recommender') {
     renderRecommender();
   }
@@ -123,13 +164,48 @@ function renderOverview() {
   `;
 }
 
-function renderIntegrationsMain() {
+function renderIntegrationsLanding() {
+  const content = document.getElementById('mainContent');
+  if (!content) return;
+  
+  content.innerHTML = `
+    <div class="integrations-landing">
+      <div class="landing-header">
+        <h1>Integraciones Leal 360</h1>
+        <p>Conecta tu negocio con nuestras soluciones</p>
+      </div>
+      
+      <div class="integration-types-grid">
+        ${Object.values(INTEGRATION_TYPES).map(integration => `
+          <div class="integration-card ${integration.status}" onclick="${integration.status === 'available' ? 'showApiDocumentation()' : `showComingSoon('${integration.id}')`}">
+            <div class="card-icon">${integration.icon}</div>
+            <h3>${integration.name}</h3>
+            <div class="status-badge ${integration.status}">
+              ${integration.status === 'available' ? '✅ Disponible' : '🔜 Próximamente'}
+            </div>
+            <p>${integration.description}</p>
+            <div class="card-action">
+              ${integration.status === 'available' ? 'Ver documentación →' : 'Notifícame →'}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function showApiDocumentation() {
   const content = document.getElementById('mainContent');
   if (!content) return;
   
   // Layout principal: sidebar + contenido
   content.innerHTML = `
     <div class="integrations-container">
+      <div class="breadcrumbs">
+        <a onclick="renderIntegrationsLanding()">Integraciones</a>
+        <span>›</span>
+        <span>API</span>
+      </div>
       <aside id="apiSidebar" class="api-sidebar"></aside>
       <main id="apiContent" class="api-content">
         <!-- Vista inicial con grid de todos los endpoints -->
@@ -142,6 +218,54 @@ function renderIntegrationsMain() {
   
   // Renderizar vista inicial (grid de endpoints)
   renderApiGrid();
+}
+
+function showComingSoon(type) {
+  const integration = INTEGRATION_TYPES[type];
+  if (!integration) return;
+  
+  const modal = document.createElement('div');
+  modal.className = 'coming-soon-modal-overlay';
+  modal.innerHTML = `
+    <div class="coming-soon-modal">
+      <div class="modal-header">
+        <h3>${integration.name}</h3>
+        <button class="close-modal" onclick="closeComingSoonModal()">×</button>
+      </div>
+      <div class="modal-content">
+        <div class="coming-soon-icon">🚀</div>
+        <h4>Próximamente</h4>
+        <p>${integration.description}</p>
+        <div class="notify-form">
+          <input type="email" placeholder="tu@email.com" id="notifyEmail" />
+          <button class="notify-button" onclick="handleNotifyRequest('${type}')">Notificarme</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function closeComingSoonModal() {
+  const modal = document.querySelector('.coming-soon-modal-overlay');
+  if (modal) modal.remove();
+}
+
+function handleNotifyRequest(type) {
+  const email = document.getElementById('notifyEmail').value;
+  if (!email) {
+    alert('Por favor ingresa tu email');
+    return;
+  }
+  
+  // Aquí se podría enviar a un endpoint real
+  alert(`Te notificaremos cuando ${INTEGRATION_TYPES[type].name} esté disponible. Email: ${email}`);
+  closeComingSoonModal();
+}
+
+function renderIntegrationsMain() {
+  // Esta función ahora se llama showApiDocumentation()
+  showApiDocumentation();
 }
 
 function renderRecommender() {

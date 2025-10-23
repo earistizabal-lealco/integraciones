@@ -1015,3 +1015,32 @@
     border-bottom: none;
   }
 }
+
+/* =========================
+   BREADCRUMBS
+   ========================= */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid var(--integration-border);
+  font-size: 0.875rem;
+  color: var(--integration-text-muted);
+}
+
+.breadcrumbs a {
+  color: #FFD100;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.breadcrumbs a:hover {
+  color: #FFA500;
+}
+
+.breadcrumbs span {
+  color: var(--integration-text-muted);
+}
