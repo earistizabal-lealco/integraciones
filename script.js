@@ -10,7 +10,7 @@ const mainNavigation = [
 // Datos de tipos de integración
 const INTEGRATION_TYPES = {
   'api': {
-    id: 'api',
+        id: 'api',
     name: 'API REST',
     icon: '📡',
     status: 'available',
@@ -25,7 +25,7 @@ const INTEGRATION_TYPES = {
     description: 'Integración sin código para puntos de venta'
   },
   'sftp': {
-    id: 'sftp',
+        id: 'sftp',
     name: 'SFTP',
     icon: '📁',
     status: 'coming-soon',
@@ -96,8 +96,8 @@ function renderOverview() {
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
                 </svg>
-              </button>
-            </div>
+                </button>
+              </div>
           </div>
         </div>
       </section>
@@ -108,20 +108,20 @@ function renderOverview() {
             <div class="card-number">1</div>
             <h3 class="card-title">Conecta</h3>
             <p class="card-description">Integra tus sistemas con Leal 360 mediante API, Agente, SFTP o Cajero Web</p>
-          </div>
-          
+        </div>
+        
           <div class="process-card">
             <div class="card-number">2</div>
             <h3 class="card-title">Centraliza</h3>
             <p class="card-description">Unifica toda la data transaccional en una sola plataforma</p>
-          </div>
-          
+            </div>
+            
           <div class="process-card">
             <div class="card-number">3</div>
             <h3 class="card-title">Acciona</h3>
             <p class="card-description">Convierte la data en acciones que generen ingresos incrementales</p>
-          </div>
-        </div>
+              </div>
+            </div>
       </section>
 
       <section class="leal-section">
@@ -129,11 +129,11 @@ function renderOverview() {
           <div class="leal-text">
             <h2 class="leal-title">Leal 360</h2>
             <p class="leal-description">Una plataforma integral con 4 módulos para gestionar a tus clientes</p>
-          </div>
+              </div>
           <div class="leal-image">
             <img src="Assets Leal 360/General - Group 1171276518 copia.png" alt="Leal 360 Platform" />
+            </div>
           </div>
-        </div>
       </section>
 
       <section class="benefits-section">
@@ -143,7 +143,7 @@ function renderOverview() {
               <div class="diagram-content">
                 <h3 class="diagram-title">Zero/First/Second Party Data</h3>
                 <p class="diagram-subtitle">Prioridad: Zero > First > Second</p>
-              </div>
+          </div>
             </div>
           </div>
           <div class="benefits-text">
@@ -160,7 +160,7 @@ function renderOverview() {
           <button class="cta-button">Contactar Ahora</button>
         </div>
       </section>
-    </div>
+              </div>
   `;
 }
 
@@ -170,26 +170,48 @@ function renderIntegrationsLanding() {
   
   content.innerHTML = `
     <div class="integrations-landing">
-      <div class="landing-header">
-        <h1>Integraciones Leal 360</h1>
-        <p>Conecta tu negocio con nuestras soluciones</p>
-      </div>
-      
-      <div class="integration-types-grid">
-        ${Object.values(INTEGRATION_TYPES).map(integration => `
-          <div class="integration-card ${integration.status}" onclick="${integration.status === 'available' ? 'showApiDocumentation()' : `showComingSoon('${integration.id}')`}">
-            <div class="card-icon">${integration.icon}</div>
-            <h3>${integration.name}</h3>
-            <div class="status-badge ${integration.status}">
-              ${integration.status === 'available' ? '✅ Disponible' : '🔜 Próximamente'}
-            </div>
-            <p>${integration.description}</p>
-            <div class="card-action">
-              ${integration.status === 'available' ? 'Ver documentación →' : 'Notifícame →'}
+      <section class="integrations-hero">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Conecta tu negocio con <span class="highlight">Leal 360</span>
+          </h1>
+          <p class="hero-subtitle">
+            Elige la modalidad de integración que mejor se adapte a tu infraestructura técnica
+          </p>
+        </div>
+      </section>
+
+      <section class="integrations-grid-section">
+        <div class="integration-types-grid">
+          ${Object.values(INTEGRATION_TYPES).map(integration => `
+            <div class="integration-card ${integration.status}" onclick="${integration.status === 'available' ? 'showApiDocumentation()' : `showComingSoon('${integration.id}')`}">
+              <div class="card-header">
+                <div class="card-icon-wrapper">
+                  ${getIntegrationIcon(integration.id)}
+        </div>
+                <span class="status-badge ${integration.status}">
+                  ${integration.status === 'available' ? 'Disponible' : 'Próximamente'}
+                </span>
+          </div>
+          
+              <div class="card-body">
+                <h3 class="card-title">${integration.name}</h3>
+                <p class="card-description">${integration.description}</p>
+                ${getIntegrationFeatures(integration.id)}
+          </div>
+          
+              <div class="card-footer">
+                <button class="card-action-btn ${integration.status === 'available' ? 'primary' : 'secondary'}">
+                  ${integration.status === 'available' ? 'Ver documentación' : 'Notifícame'}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+              </button>
             </div>
           </div>
-        `).join('')}
-      </div>
+          `).join('')}
+        </div>
+      </section>
     </div>
   `;
 }
@@ -201,16 +223,31 @@ function showApiDocumentation() {
   // Layout principal: sidebar + contenido
   content.innerHTML = `
     <div class="integrations-container">
-      <div class="breadcrumbs">
-        <a onclick="renderIntegrationsLanding()">Integraciones</a>
-        <span>›</span>
-        <span>API</span>
-      </div>
+      <div class="breadcrumbs-wrapper">
+        <nav class="breadcrumbs">
+          <a href="#" onclick="renderIntegrationsLanding()" class="breadcrumb-item">
+            <svg class="breadcrumb-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+            Integraciones
+          </a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-item active">API REST</span>
+        </nav>
+        
+        <button class="back-button" onclick="renderIntegrationsLanding()">
+          <svg class="back-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Volver a integraciones
+          </button>
+            </div>
       <aside id="apiSidebar" class="api-sidebar"></aside>
       <main id="apiContent" class="api-content">
         <!-- Vista inicial con grid de todos los endpoints -->
       </main>
-    </div>
+            </div>
   `;
   
   // Renderizar sidebar
@@ -225,21 +262,44 @@ function showComingSoon(type) {
   if (!integration) return;
   
   const modal = document.createElement('div');
-  modal.className = 'coming-soon-modal-overlay';
+  modal.className = 'modal-overlay';
   modal.innerHTML = `
-    <div class="coming-soon-modal">
+    <div class="modal-container">
+      <button class="modal-close" onclick="closeComingSoonModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      
       <div class="modal-header">
-        <h3>${integration.name}</h3>
-        <button class="close-modal" onclick="closeComingSoonModal()">×</button>
-      </div>
-      <div class="modal-content">
-        <div class="coming-soon-icon">🚀</div>
-        <h4>Próximamente</h4>
-        <p>${integration.description}</p>
-        <div class="notify-form">
-          <input type="email" placeholder="tu@email.com" id="notifyEmail" />
-          <button class="notify-button" onclick="handleNotifyRequest('${type}')">Notificarme</button>
+        <div class="modal-icon-wrapper">
+          ${getIntegrationIcon(type)}
         </div>
+        <h2 class="modal-title">${integration.name}</h2>
+        <p class="modal-subtitle">Próximamente disponible</p>
+        </div>
+      
+      <div class="modal-body">
+        <p class="modal-description">
+          ${integration.description}. Te notificaremos cuando esté disponible.
+        </p>
+        
+        <form class="notify-form" onsubmit="handleNotifyRequest('${type}'); return false;">
+          <div class="form-group">
+            <label for="notifyEmail">Email</label>
+            <input 
+              type="email" 
+              id="notifyEmail" 
+              placeholder="tu@empresa.com"
+              required
+            />
+          </div>
+          
+          <button type="submit" class="submit-button">
+            Notificarme cuando esté disponible
+        </button>
+        </form>
       </div>
     </div>
   `;
@@ -247,7 +307,7 @@ function showComingSoon(type) {
 }
 
 function closeComingSoonModal() {
-  const modal = document.querySelector('.coming-soon-modal-overlay');
+  const modal = document.querySelector('.modal-overlay');
   if (modal) modal.remove();
 }
 
@@ -263,6 +323,70 @@ function handleNotifyRequest(type) {
   closeComingSoonModal();
 }
 
+// Función para obtener iconos SVG profesionales
+function getIntegrationIcon(type) {
+  const icons = {
+    'api': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+      <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+    </svg>`,
+    'cajero-web': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 21h8M12 17v4"/>
+    </svg>`,
+    'sftp': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/>
+      <path d="M13 2v7h7"/>
+    </svg>`,
+    'marketplace': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+    </svg>`,
+    'mcp': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+      <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+      <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+      <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+      <line x1="12" y1="22.08" x2="12" y2="12"/>
+    </svg>`
+  };
+  return icons[type] || '';
+}
+
+// Función para obtener características de cada integración
+function getIntegrationFeatures(type) {
+  const features = {
+    'api': `<ul class="card-features">
+      <li>18 endpoints documentados</li>
+      <li>Autenticación JWT</li>
+      <li>Webhooks en tiempo real</li>
+    </ul>`,
+    'cajero-web': `<ul class="card-features">
+      <li>Sin código requerido</li>
+      <li>Configuración visual</li>
+      <li>Soporte 24/7</li>
+    </ul>`,
+    'sftp': `<ul class="card-features">
+      <li>Transferencia segura</li>
+      <li>Archivos batch</li>
+      <li>Automatización completa</li>
+    </ul>`,
+    'marketplace': `<ul class="card-features">
+      <li>Integraciones pre-construidas</li>
+      <li>1-click deployment</li>
+      <li>ERP y CRM populares</li>
+    </ul>`,
+    'mcp': `<ul class="card-features">
+      <li>Protocolo estandarizado</li>
+      <li>IA contextual</li>
+      <li>Escalable cross-ecosystem</li>
+    </ul>`
+  };
+  return features[type] || '';
+}
+
 function renderIntegrationsMain() {
   // Esta función ahora se llama showApiDocumentation()
   showApiDocumentation();
@@ -276,7 +400,7 @@ function renderRecommender() {
     <div class="recommender-container">
       <h1>Recomendador</h1>
       <p>Sección de recomendador en desarrollo...</p>
-    </div>
+        </div>
   `;
 }
 
@@ -293,9 +417,9 @@ function createFloatingChat() {
       <div class="header-content">
         <img src="leal-logo-dark.png" alt="Leal 360" class="header-logo" />
         <h3>Agente de Integraciones Leal 360</h3>
-      </div>
+        </div>
       <button class="close-chat" onclick="closeFloatingChat()">×</button>
-    </div>
+              </div>
     <div class="chat-messages" id="chatMessages">
       <div class="agent-message">
         <div class="message-avatar">🤖</div>
@@ -307,17 +431,17 @@ function createFloatingChat() {
             <button class="action-btn" data-topic="compatibilidad">⚙️ Compatibilidad</button>
             <button class="action-btn" data-topic="proceso">📋 Proceso</button>
             <button class="action-btn" data-topic="roi">💰 ROI</button>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+          </div>
+              </div>
   `;
   
   document.body.appendChild(floatingChat);
   
   setTimeout(() => floatingChat.classList.add('show'), 10);
-  
-  setTimeout(() => {
+    
+    setTimeout(() => {
     const actionBtns = floatingChat.querySelectorAll('.action-btn');
     actionBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -346,7 +470,7 @@ function handleQuickAction(topic) {
     <div class="message-avatar">👤</div>
     <div class="message-content">
       <p>${getTopicText(topic)}</p>
-    </div>
+          </div>
   `;
   chatMessages.appendChild(userMessage);
   
@@ -360,8 +484,8 @@ function handleQuickAction(topic) {
       <div class="message-avatar">🤖</div>
       <div class="message-content">
         <p>${getAgentResponse(getTopicText(topic))}</p>
-      </div>
-    `;
+    </div>
+  `;
     chatMessages.appendChild(agentResponse);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }, 1500);
@@ -432,8 +556,8 @@ function sendAgentMessage() {
       <div class="message-avatar">🤖</div>
       <div class="message-content">
         <p>${getAgentResponse(message)}</p>
-      </div>
-    `;
+    </div>
+  `;
     chatMessages.appendChild(agentResponse);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }, 1500);
