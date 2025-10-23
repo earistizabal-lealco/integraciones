@@ -1,0 +1,28 @@
+{
+  "app": {
+    "name": "Leal 360 Prototype",
+    "version": "1.2.0",
+    "description": "Prototipo de la plataforma Leal 360 con vista Overview unificada y chat flotante",
+    "author": "Leal 360 Team",
+    "license": "MIT"
+  },
+  "server": {
+    "port": 8000,
+    "host": "localhost",
+    "protocol": "http"
+  },
+  "assets": {
+    "images": "./Imágenes",
+    "logos": "./leal-logo-dark.png",
+    "backgrounds": "./hero-background-optimized.jpg"
+  },
+  "cache": {
+    "busting": true,
+    "version": "2025-10-08-12-20"
+  },
+  "development": {
+    "debug": true,
+    "verbose": false,
+    "hotReload": true
+  }
+}
