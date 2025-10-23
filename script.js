@@ -1,592 +1,813 @@
-// Leal API Documentation - JavaScript Functionality
+// Leal 360 - Script Principal Optimizado
+let currentSection = 'overview';
 
-document.addEventListener('DOMContentLoaded', function() {
-    initializeNavigation();
-    initializeSearch();
-    initializeCopyButtons();
-    initializeScrollSpy();
-    initializeMobileMenu();
-    initializeAnimations();
-});
+const mainNavigation = [
+  { id: 'overview', title: 'Overview', icon: 'briefcase' },
+  { id: 'integrations', title: 'Integraciones', icon: 'layers' },
+  { id: 'recommender', title: 'Recomendador', icon: 'help-circle' }
+];
 
-// Navigation functionality
-function initializeNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active class from all links
-            navLinks.forEach(l => l.classList.remove('active'));
-            
-            // Add active class to clicked link
-            this.classList.add('active');
-            
-            // Get target section
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            
-            if (targetSection) {
-                // Smooth scroll to section
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-                
-                // Update URL without triggering page reload
-                history.pushState(null, null, `#${targetId}`);
-            }
-        });
-    });
-    
-    // Handle direct URL access with hash
-    const hash = window.location.hash;
-    if (hash) {
-        const targetLink = document.querySelector(`a[href="${hash}"]`);
-        if (targetLink) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            targetLink.classList.add('active');
-            
-            setTimeout(() => {
-                const targetSection = document.querySelector(hash);
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }, 100);
-        }
-    }
-}
-
-// Search functionality
-function initializeSearch() {
-    const searchInput = document.querySelector('.search-input');
-    const navSections = document.querySelectorAll('.nav-section');
-    
-    if (!searchInput) return;
-    
-    let searchTimeout;
-    
-    searchInput.addEventListener('input', function() {
-        clearTimeout(searchTimeout);
-        const query = this.value.toLowerCase().trim();
-        
-        searchTimeout = setTimeout(() => {
-            filterNavigation(query);
-        }, 300);
-    });
-    
-    function filterNavigation(query) {
-        navSections.forEach(section => {
-            const sectionTitle = section.querySelector('h3').textContent.toLowerCase();
-            const links = section.querySelectorAll('.nav-link');
-            let hasVisibleLinks = false;
-            
-            if (!query) {
-                // Show all if no query
-                section.style.display = 'block';
-                links.forEach(link => {
-                    link.style.display = 'block';
-                });
-                return;
-            }
-            
-            // Check section title
-            const sectionMatches = sectionTitle.includes(query);
-            
-            // Check individual links
-            links.forEach(link => {
-                const linkText = link.textContent.toLowerCase();
-                const linkMatches = linkText.includes(query) || sectionMatches;
-                
-                link.style.display = linkMatches ? 'block' : 'none';
-                if (linkMatches) hasVisibleLinks = true;
-            });
-            
-            // Show/hide section based on matches
-            section.style.display = (hasVisibleLinks || sectionMatches) ? 'block' : 'none';
-        });
-    }
-    
-    // Clear search on escape
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            this.value = '';
-            filterNavigation('');
-            this.blur();
-        }
-    });
-}
-
-// Copy to clipboard functionality
-function initializeCopyButtons() {
-    const copyButtons = document.querySelectorAll('.copy-btn');
-    
-    copyButtons.forEach(button => {
-        button.addEventListener('click', async function() {
-            const codeBlock = this.closest('.code-example').querySelector('code');
-            const text = codeBlock.textContent;
-            
-            try {
-                await navigator.clipboard.writeText(text);
-                showCopySuccess(this);
-            } catch (err) {
-                // Fallback for older browsers
-                fallbackCopy(text);
-                showCopySuccess(this);
-            }
-        });
-    });
-}
-
-function showCopySuccess(button) {
-    const originalText = button.textContent;
-    button.textContent = '¡Copiado!';
-    button.style.background = 'var(--success-color)';
-    
-    setTimeout(() => {
-        button.textContent = originalText;
-        button.style.background = 'var(--primary-color)';
-    }, 2000);
-}
-
-function fallbackCopy(text) {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    textArea.style.top = '-999999px';
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    
-    try {
-        document.execCommand('copy');
-    } catch (err) {
-        console.error('Fallback copy failed:', err);
-    }
-    
-    document.body.removeChild(textArea);
-}
-
-// Scroll spy functionality
-function initializeScrollSpy() {
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    if (sections.length === 0) return;
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sectionId = entry.target.id;
-                const correspondingLink = document.querySelector(`a[href="#${sectionId}"]`);
-                
-                if (correspondingLink) {
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    correspondingLink.classList.add('active');
-                    
-                    // Update URL
-                    if (history.replaceState) {
-                        history.replaceState(null, null, `#${sectionId}`);
-                    }
-                }
-            }
-        });
-    }, {
-        rootMargin: '-50px 0px -50px 0px',
-        threshold: 0.1
-    });
-    
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-}
-
-// Mobile menu functionality
-function initializeMobileMenu() {
-    // Create mobile menu button if screen is small
-    if (window.innerWidth <= 1024) {
-        createMobileMenuButton();
-    }
-    
-    // Handle window resize
-    window.addEventListener('resize', debounce(() => {
-        if (window.innerWidth <= 1024) {
-            createMobileMenuButton();
-        } else {
-            removeMobileMenuButton();
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.remove('open');
-        }
-    }, 250));
-}
-
-function createMobileMenuButton() {
-    // Check if button already exists
-    if (document.querySelector('.mobile-menu-btn')) return;
-    
-    const button = document.createElement('button');
-    button.className = 'mobile-menu-btn';
-    button.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-        <span>Menú</span>
-    `;
-    
-    // Add styles
-    button.style.cssText = `
-        position: fixed;
-        top: 1rem;
-        left: 1rem;
-        z-index: 200;
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        padding: 0.75rem;
-        border-radius: var(--radius);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: pointer;
-        box-shadow: var(--shadow-lg);
-        transition: all 0.2s;
-    `;
-    
-    button.addEventListener('click', function() {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.classList.toggle('open');
-        
-        // Close sidebar when clicking outside
-        if (sidebar.classList.contains('open')) {
-            setTimeout(() => {
-                document.addEventListener('click', closeSidebarOnOutsideClick);
-            }, 100);
-        }
-    });
-    
-    document.body.appendChild(button);
-}
-
-function removeMobileMenuButton() {
-    const button = document.querySelector('.mobile-menu-btn');
-    if (button) {
-        button.remove();
-    }
-}
-
-function closeSidebarOnOutsideClick(e) {
-    const sidebar = document.querySelector('.sidebar');
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
-        sidebar.classList.remove('open');
-        document.removeEventListener('click', closeSidebarOnOutsideClick);
-    }
-}
-
-// Animations
-function initializeAnimations() {
-    // Animate sections on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const animationObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Observe all animatable elements
-    const animatedElements = document.querySelectorAll('.feature-card, .endpoint, .auth-card');
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        animationObserver.observe(el);
-    });
-}
-
-// Utility functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Copy code function (global for onclick handlers)
-window.copyCode = function(button) {
-    const codeBlock = button.closest('.code-example').querySelector('code');
-    const text = codeBlock.textContent;
-    
-    navigator.clipboard.writeText(text).then(() => {
-        showCopySuccess(button);
-    }).catch(() => {
-        fallbackCopy(text);
-        showCopySuccess(button);
-    });
+// Datos de tipos de integración
+const INTEGRATION_TYPES = {
+  'api': {
+        id: 'api',
+    name: 'API REST',
+    icon: '📡',
+    status: 'available',
+    description: 'Documentación completa de endpoints',
+    action: 'showApiDocumentation'
+  },
+  'cajero-web': {
+    id: 'cajero-web',
+    name: 'Cajero Web',
+    icon: '🖥️',
+    status: 'coming-soon',
+    description: 'Integración sin código para puntos de venta'
+  },
+  'sftp': {
+        id: 'sftp',
+    name: 'SFTP',
+    icon: '📁',
+    status: 'coming-soon',
+    description: 'Transferencia segura de archivos'
+  },
+  'marketplace': {
+    id: 'marketplace',
+    name: 'Marketplace',
+    icon: '🏪',
+    status: 'coming-soon',
+    description: 'Integraciones con ERPs y CRMs populares'
+  },
+  'mcp': {
+    id: 'mcp',
+    name: 'MCP - Model Context Protocol',
+    icon: '🤖',
+    status: 'coming-soon',
+    description: 'Integración IA con Leal Ecosystem',
+    highlight: true
+  }
 };
 
-// API Demo functionality (for interactive examples)
-function initializeApiDemo() {
-    const demoButtons = document.querySelectorAll('.demo-btn');
-    
-    demoButtons.forEach(button => {
-        button.addEventListener('click', async function() {
-            const endpoint = this.dataset.endpoint;
-            const method = this.dataset.method || 'GET';
-            const resultContainer = this.nextElementSibling;
-            
-            if (!resultContainer || !resultContainer.classList.contains('demo-result')) {
-                return;
-            }
-            
-            // Show loading state
-            this.textContent = 'Ejecutando...';
-            this.disabled = true;
-            resultContainer.innerHTML = '<div class="loading">Cargando...</div>';
-            
-            try {
-                // Simulate API call
-                await simulateApiCall(endpoint, method);
-                
-                // Show mock response
-                const mockResponse = getMockResponse(endpoint);
-                resultContainer.innerHTML = `
-                    <div class="demo-response">
-                        <div class="response-status success">200 OK</div>
-                        <pre><code class="language-json">${JSON.stringify(mockResponse, null, 2)}</code></pre>
-                    </div>
-                `;
-                
-                // Re-highlight code
-                if (window.Prism) {
-                    Prism.highlightElement(resultContainer.querySelector('code'));
-                }
-            } catch (error) {
-                resultContainer.innerHTML = `
-                    <div class="demo-response">
-                        <div class="response-status error">Error</div>
-                        <pre><code>${error.message}</code></pre>
-                    </div>
-                `;
-            } finally {
-                this.textContent = 'Probar API';
-                this.disabled = false;
-            }
-        });
-    });
+function initializeApp() {
+  showSection('overview');
 }
 
-async function simulateApiCall(endpoint, method) {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
-    
-    // Simulate occasional errors
-    if (Math.random() < 0.1) {
-        throw new Error('Error de conexión simulado');
-    }
+function showSection(sectionId) {
+  currentSection = sectionId;
+  
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  const activeBtn = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+  
+  if (sectionId === 'overview') {
+    renderOverview();
+  } else if (sectionId === 'integrations') {
+    renderIntegrationsLanding();
+  } else if (sectionId === 'recommender') {
+    renderRecommender();
+  }
 }
 
-function getMockResponse(endpoint) {
-    const responses = {
-        '/v2/users': {
-            data: [
-                {
-                    id: 'usr_1234567890',
-                    email: 'usuario@ejemplo.com',
-                    name: 'Juan Pérez',
-                    points_balance: 1250,
-                    tier: 'gold',
-                    created_at: '2024-01-15T10:30:00Z',
-                    last_activity: '2024-03-10T14:45:00Z'
-                }
-            ],
-            meta: {
-                page: 1,
-                limit: 20,
-                total: 156,
-                total_pages: 8
-            }
-        },
-        '/v2/loyalty/programs': {
-            data: [
-                {
-                    id: 'prog_abc123',
-                    name: 'Programa VIP',
-                    description: 'Programa de lealtad para clientes frecuentes',
-                    status: 'active'
-                }
-            ]
-        }
-    };
-    
-    return responses[endpoint] || { message: 'Respuesta de ejemplo' };
-}
+function renderOverview() {
+  const content = document.getElementById('mainContent');
+  if (!content) return;
+  
+  content.innerHTML = `
+    <div class="overview-container">
+      <section class="hero-section">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="highlight">Centraliza</span> toda la data de tus usuarios,<br>
+            conviértela en <span class="highlight">ingresos</span> con Leal 360
+          </h1>
+          
+          <div class="agent-section">
+            <p class="agent-context">¿Tienes dudas sobre integraciones?</p>
+            <div class="agent-input-container">
+              <input type="text" id="agentInput" class="agent-input" placeholder="Pregúntale a nuestro agente..." onkeypress="handleAgentInput(event)" />
+              <button class="agent-send-btn" onclick="sendAgentMessage()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                </svg>
+                </button>
+              </div>
+          </div>
+        </div>
+      </section>
 
-// Theme toggle (optional feature)
-function initializeThemeToggle() {
-    const toggleButton = document.createElement('button');
-    toggleButton.className = 'theme-toggle';
-    toggleButton.innerHTML = '🌙';
-    toggleButton.style.cssText = `
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        z-index: 200;
-        background: var(--background);
-        border: 1px solid var(--border-color);
-        width: 3rem;
-        height: 3rem;
-        border-radius: 50%;
-        font-size: 1.25rem;
-        cursor: pointer;
-        transition: all 0.2s;
-        box-shadow: var(--shadow-md);
-    `;
-    
-    toggleButton.addEventListener('click', function() {
-        document.body.classList.toggle('dark-theme');
-        this.innerHTML = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+      <section class="process-cards">
+        <div class="cards-container">
+          <div class="process-card">
+            <div class="card-number">1</div>
+            <h3 class="card-title">Conecta</h3>
+            <p class="card-description">Integra tus sistemas con Leal 360 mediante API, Agente, SFTP o Cajero Web</p>
+        </div>
         
-        // Save preference
-        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-    });
-    
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        toggleButton.innerHTML = '☀️';
-    }
-    
-    document.body.appendChild(toggleButton);
-}
-
-// Initialize additional features
-document.addEventListener('DOMContentLoaded', function() {
-    // Uncomment to enable theme toggle
-    // initializeThemeToggle();
-    
-    // Initialize API demo if demo buttons exist
-    if (document.querySelector('.demo-btn')) {
-        initializeApiDemo();
-    }
-});
-
-// Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    // Ctrl/Cmd + K to focus search
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        const searchInput = document.querySelector('.search-input');
-        if (searchInput) {
-            searchInput.focus();
-            searchInput.select();
-        }
-    }
-    
-    // Escape to close mobile menu
-    if (e.key === 'Escape') {
-        const sidebar = document.querySelector('.sidebar');
-        if (sidebar.classList.contains('open')) {
-            sidebar.classList.remove('open');
-        }
-    }
-});
-
-// Error handling
-window.addEventListener('error', function(e) {
-    console.error('Error en la aplicación:', e.error);
-});
-
-// Performance monitoring
-if ('performance' in window) {
-    window.addEventListener('load', function() {
-        setTimeout(() => {
-            const perfData = performance.timing;
-            const loadTime = perfData.loadEventEnd - perfData.navigationStart;
-            console.log(`Tiempo de carga de la página: ${loadTime}ms`);
-        }, 0);
-    });
-}
-// Función para mostrar secciones
-function showSection(sectionName) {
-    const mainContent = document.getElementById("mainContent");
-    if (!mainContent) return;
-    
-    if (sectionName === "overview") {
-        mainContent.innerHTML = getOverviewContent();
-    } else if (sectionName === "integrations") {
-        mainContent.innerHTML = getIntegrationsContent();
-    }
-}
-
-// Función para obtener contenido de overview
-function getOverviewContent() {
-    return `
-        <div class="overview-section">
-            <div class="overview-header">
-                <h1>Leal 360 - Plataforma de Gestión de Clientes</h1>
-                <p>Una solución integral para transformar datos en ingresos</p>
+          <div class="process-card">
+            <div class="card-number">2</div>
+            <h3 class="card-title">Centraliza</h3>
+            <p class="card-description">Unifica toda la data transaccional en una sola plataforma</p>
             </div>
             
-            <div class="module-grid">
-                <div class="module-card" onclick="showSection(integrations)">
-                    <div class="module-info">
-                        <h3 class="module-title">Integra tus datos</h3>
-                        <p>Unifica todas tus fuentes de datos en un sólo lugar.</p>
-                    </div>
-                </div>
-                
-                <div class="module-card">
-                    <div class="module-info">
-                        <h3 class="module-title">Centraliza todo desde Leal 360 y acciona</h3>
-                        <p>Gestiona todo el ciclo de vida de tus clientes desde una misma plataforma.</p>
-                    </div>
-                </div>
-                
-                <div class="module-card">
-                    <div class="module-info">
-                        <h3 class="module-title">Monitorea tus ingresos y ROI</h3>
-                        <p>Haz seguimiento de todas tus métricas claves de negocio y la generación de valor.</p>
-                    </div>
-                </div>
+          <div class="process-card">
+            <div class="card-number">3</div>
+            <h3 class="card-title">Acciona</h3>
+            <p class="card-description">Convierte la data en acciones que generen ingresos incrementales</p>
+              </div>
             </div>
+      </section>
+
+      <section class="leal-section">
+        <div class="leal-container">
+          <div class="leal-text">
+            <h2 class="leal-title">Leal 360: cuatro módulos, una plataforma</h2>
+            <p class="leal-description">
+              <strong>CDP</strong> para perfiles 360°, <strong>Campañas</strong> para activación 
+              multicanal, <strong>Voz del Cliente</strong> para medir experiencia y 
+              <strong>Beneficios</strong> para programas de fidelización. Todo integrado para 
+              convertir datos en ingresos incrementales.
+            </p>
+              </div>
+          <div class="leal-image">
+            <img src="Assets Leal 360/General - Group 1171276518 copia.png" alt="Leal 360 Platform" />
+          </div>
         </div>
-    `;
+      </section>
+
+      <section class="why-leal-section">
+        <div class="why-leal-container">
+          <div class="why-leal-header">
+            <h2 class="section-title">¿Por qué integrar con Leal 360?</h2>
+            <p class="section-subtitle">
+              Resultados medibles que transforman tu relación con los clientes
+            </p>
+        </div>
+        
+          <div class="benefits-grid">
+            <!-- Beneficio 1: Retención -->
+            <div class="benefit-card">
+              <div class="benefit-icon">🎯</div>
+              <div class="benefit-metric">+X%</div>
+              <h3 class="benefit-title">Retención de clientes</h3>
+              <p class="benefit-description">
+                Identifica patrones de abandono y activa campañas automáticas 
+                para recuperar clientes antes de que se vayan
+              </p>
+          </div>
+          
+            <!-- Beneficio 2: Ticket Promedio -->
+            <div class="benefit-card">
+              <div class="benefit-icon">💰</div>
+              <div class="benefit-metric">+X%</div>
+              <h3 class="benefit-title">Ticket promedio</h3>
+              <p class="benefit-description">
+                Recomendaciones personalizadas en el momento justo aumentan 
+                el valor de cada transacción
+              </p>
+          </div>
+          
+            <!-- Beneficio 3: Frecuencia -->
+            <div class="benefit-card">
+              <div class="benefit-icon">🔄</div>
+              <div class="benefit-metric">+X%</div>
+              <h3 class="benefit-title">Frecuencia de compra</h3>
+              <p class="benefit-description">
+                Programas de fidelización y comunicación relevante traen 
+                a tus clientes de vuelta más seguido
+              </p>
+          </div>
+          
+            <!-- Beneficio 4: ROI -->
+            <div class="benefit-card">
+              <div class="benefit-icon">📈</div>
+              <div class="benefit-metric">X%</div>
+              <h3 class="benefit-title">ROI primer año</h3>
+              <p class="benefit-description">
+                Cada peso invertido en Leal 360 genera X pesos en ingresos 
+                incrementales medibles
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="cta-container">
+          <h2 class="cta-title">¿Listo para comenzar?</h2>
+          <p class="cta-description">Explora las modalidades de integración disponibles para tu empresa</p>
+          <button class="cta-button" onclick="showSection('integrations')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12,2 2,7 12,12 22,7 12,2"></polygon>
+              <polyline points="2,17 12,22 22,17"></polyline>
+              <polyline points="2,12 12,17 22,12"></polyline>
+            </svg>
+            <span>Explorar Modalidades de Integración</span>
+              </button>
+        </div>
+      </section>
+    </div>
+  `;
 }
 
-// Función para obtener contenido de integraciones
-function getIntegrationsContent() {
-    return `
-        <div class="integrations-section">
-            <h1>Integraciones</h1>
-            <p>Conecta tus sistemas con Leal 360</p>
+function renderIntegrationsLanding() {
+  const content = document.getElementById('mainContent');
+  if (!content) return;
+  
+  content.innerHTML = `
+    <div class="integrations-landing">
+      <!-- Hero Section -->
+      <section class="integrations-hero">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Conecta tu Infraestructura
+          </h1>
+          <p class="hero-subtitle">
+            Elige la herramienta de integración que mejor se adapte a tu infraestructura para convertir data en ingresos
+      </p>
+    </div>
+      </section>
+      
+      <!-- Flujo del Ecosistema -->
+      <section class="ecosystem-flow">
+        <h2>El ecosistema de integraciones Leal 360</h2>
+        
+        <div class="flow-diagram">
+          <!-- Paso 1: Data Transaccional -->
+          <div class="flow-step">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <h3>Data Transaccional</h3>
+            <p>Compras, usuarios, productos</p>
+            <ul class="step-sources">
+              <li>Apps móviles</li>
+              <li>Páginas web</li>
+              <li>Puntos de venta</li>
+              <li>E-commerce</li>
+            </ul>
+          </div>
+          
+          <div class="flow-arrow">→</div>
+          
+          <!-- Paso 2: Integración -->
+          <div class="flow-step highlight">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+              </svg>
         </div>
-    `;
+            <h3>Integración</h3>
+            <p>Captura de datos</p>
+            <ul class="step-methods">
+              <li>API REST</li>
+              <li>Agent</li>
+              <li>SFTP</li>
+              <li>Cajero Web</li>
+            </ul>
+        </div>
+          
+          <div class="flow-arrow">→</div>
+          
+          <!-- Paso 3: Servicios Leal -->
+          <div class="flow-step">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+                <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+                <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+      </svg>
+    </div>
+            <h3>Servicios Leal 360</h3>
+            <p>Gestión y activación</p>
+            <ul class="step-services">
+              <li>Registro de usuarios</li>
+              <li>Acumulación de puntos</li>
+              <li>Canje de recompensas</li>
+              <li>Gestión de promociones</li>
+    </ul>
+        </div>
+          
+          <div class="flow-arrow">→</div>
+          
+          <!-- Paso 4: Ecosistema -->
+          <div class="flow-step">
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 3v18h18"/>
+                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                <circle cx="18" cy="6" r="2"/>
+              </svg>
+            </div>
+            <h3>Ingresos Incrementales</h3>
+            <p>Resultados del negocio</p>
+            <ul class="step-results">
+              <li>Mayor frecuencia de compra</li>
+              <li>Ticket promedio más alto</li>
+              <li>Retención de clientes</li>
+              <li>Insights accionables</li>
+            </ul>
+            </div>
+          </div>
+          
+        <div class="flow-callout">
+          <p>
+            <strong>Las integraciones son el corazón del ecosistema:</strong> capturan 
+            automáticamente cada transacción de tus canales (POS, e-commerce, apps), 
+            la unifican en Leal 360 y activan servicios que generan ingresos incrementales 
+            medibles. <strong>Integra una vez, activa siempre.</strong>
+          </p>
+        </div>
+      </section>
+
+      <!-- Tabla Comparativa -->
+      <section class="comparison-section">
+        <h2>¿Qué tipo de integración necesitas?</h2>
+        <p class="section-subtitle">
+          Depende de tu POS y stack tecnológico. Compara las opciones:
+        </p>
+        
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+                <thead>
+                  <tr>
+                <th class="criteria-column">Criterio</th>
+                <th class="integration-column api">API REST</th>
+                <th class="integration-column agent">Agent</th>
+                <th class="integration-column sftp">SFTP</th>
+                <th class="integration-column cashier">Cajero Web</th>
+                  </tr>
+                </thead>
+                <tbody>
+              <!-- Quién conecta -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>¿Quién conecta?</strong>
+                </td>
+                <td>Comercio/Leal</td>
+                <td>Leal</td>
+                <td>Comercio/Leal</td>
+                <td>Leal</td>
+              </tr>
+              
+              <!-- Qué necesitamos -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>¿Qué necesitamos?</strong>
+                </td>
+                <td>Comercio consume Leal</td>
+                <td>Instalación con conexiones locales</td>
+                <td>Archivo CSV</td>
+                <td>Compartir URL y credenciales</td>
+              </tr>
+              
+              <!-- Esfuerzo técnico -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>Esfuerzo técnico</strong>
+                </td>
+                <td><span class="effort-badge high">Alto para el cliente</span></td>
+                <td><span class="effort-badge low">Bajo</span></td>
+                <td><span class="effort-badge medium">Medio</span></td>
+                <td><span class="effort-badge none">-</span></td>
+              </tr>
+              
+              <!-- Cuándo recomendado -->
+              <tr>
+                <td class="criteria-cell">
+                  <strong>¿Cuándo se recomienda?</strong>
+      </td>
+                <td>
+                  Tiene capacidades de desarrollo<br>
+                  POS propio
+      </td>
+                <td>Solo si está en lista de POS</td>
+                <td>
+                  Sin capacidades técnicas o<br>
+                  si es difícil para ellos
+      </td>
+                <td>
+                  Sin capacidades técnicas,<br>
+                  pocos POS, o busca<br>
+                  plug-and-play sin importar POS
+      </td>
+    </tr>
+              
+              <!-- Funcionalidades -->
+              <tr class="section-header">
+                <td colspan="5"><strong>Funcionalidades Disponibles</strong></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Registro (web/app - tiempo real)</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (cashier, Landing, APP)</td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Acumulación</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span> (No tiempo real)</td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Redención</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (Cashier)</td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Cancelación</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (Customer Service Leal)</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span> (Customer Service Leal)</td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Integración E-commerce</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Canje de monedas</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="check">✓</span></td>
+              </tr>
+              
+              <tr>
+                <td class="criteria-cell">Registro de SKUs</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="partial">◐</span> (algunos)</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="cross">✗</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </section>
+      
+      <!-- Cards de Integración Simplificadas -->
+      <section class="integration-cards-section">
+        <h2>Explora cada tipo de integración</h2>
+        
+        <div class="integration-cards-grid">
+          ${Object.values(INTEGRATION_TYPES).filter(integration => integration.id !== 'mcp').map(integration => `
+            <div class="integration-card-simple ${integration.status}" onclick="${integration.status === 'available' ? 'showApiDocumentation()' : ''}">
+              <div class="card-icon-simple">
+                ${getIntegrationIcon(integration.id)}
+          </div>
+              <h3>${integration.name}</h3>
+              <p>${integration.description}</p>
+              ${integration.status === 'available' ? 
+                '<button class="card-action-simple primary">Ver documentación</button>' : 
+                '<div class="coming-soon-badge">Próximamente</div>'
+              }
+                </div>
+              `).join('')}
+            </div>
+      </section>
+    </div>
+  `;
 }
 
-// Cargar contenido inicial
-document.addEventListener("DOMContentLoaded", function() {
-    showSection("overview");
-});
+function showApiDocumentation() {
+  const content = document.getElementById('mainContent');
+  if (!content) return;
+  
+  // Layout principal: breadcrumbs arriba, sidebar + contenido abajo
+  content.innerHTML = `
+    <div class="integrations-container">
+      <!-- Breadcrumbs en toda la anchura -->
+      <div class="breadcrumbs-wrapper">
+        <nav class="breadcrumbs">
+          <a href="#" onclick="renderIntegrationsLanding()" class="breadcrumb-item">
+            <svg class="breadcrumb-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+            Integraciones
+          </a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-item active">API REST</span>
+        </nav>
+        
+        <button class="back-button" onclick="renderIntegrationsLanding()">
+          <svg class="back-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Volver a integraciones
+              </button>
+          </div>
+          
+      <!-- Layout sidebar + contenido centrado -->
+      <div class="api-layout">
+        <aside id="apiSidebar" class="api-sidebar"></aside>
+        <main id="apiContent" class="api-content">
+          <!-- Vista inicial con grid de todos los endpoints -->
+        </main>
+                      </div>
+    </div>
+  `;
+  
+  // Renderizar sidebar
+  renderApiSidebar();
+  
+  // Renderizar vista inicial (grid de endpoints)
+  renderApiGrid();
+}
+
+
+// Función para obtener iconos SVG profesionales
+function getIntegrationIcon(type) {
+  const icons = {
+    'api': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+      <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+    </svg>`,
+    'cajero-web': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 21h8M12 17v4"/>
+    </svg>`,
+    'sftp': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/>
+      <path d="M13 2v7h7"/>
+    </svg>`,
+    'marketplace': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+    </svg>`,
+    'mcp': `<svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+      <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+      <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+      <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+      <line x1="12" y1="22.08" x2="12" y2="12"/>
+    </svg>`
+  };
+  return icons[type] || '';
+}
+
+// Función para obtener características de cada integración
+function getIntegrationFeatures(type) {
+  const features = {
+    'api': `<ul class="card-features">
+      <li>18 endpoints documentados</li>
+      <li>Autenticación JWT</li>
+      <li>Webhooks en tiempo real</li>
+    </ul>`,
+    'cajero-web': `<ul class="card-features">
+      <li>Sin código requerido</li>
+      <li>Configuración visual</li>
+      <li>Soporte 24/7</li>
+    </ul>`,
+    'sftp': `<ul class="card-features">
+      <li>Transferencia segura</li>
+      <li>Archivos batch</li>
+      <li>Automatización completa</li>
+    </ul>`,
+    'marketplace': `<ul class="card-features">
+      <li>Integraciones pre-construidas</li>
+      <li>1-click deployment</li>
+      <li>ERP y CRM populares</li>
+    </ul>`,
+    'mcp': `<ul class="card-features">
+      <li>Protocolo estandarizado</li>
+      <li>IA contextual</li>
+      <li>Escalable cross-ecosystem</li>
+    </ul>`
+  };
+  return features[type] || '';
+}
+
+
+function renderIntegrationsMain() {
+  // Esta función ahora se llama showApiDocumentation()
+  showApiDocumentation();
+}
+
+function renderRecommender() {
+  const content = document.getElementById('mainContent');
+  if (!content) return;
+  
+  content.innerHTML = `
+    <div class="recommender-container">
+      <h1>Recomendador</h1>
+      <p>Sección de recomendador en desarrollo...</p>
+    </div>
+  `;
+}
+
+// Chat Flotante
+function createFloatingChat() {
+  const existingChat = document.getElementById('floatingChat');
+  if (existingChat) return;
+  
+  const floatingChat = document.createElement('div');
+  floatingChat.id = 'floatingChat';
+  floatingChat.className = 'floating-chat';
+  floatingChat.innerHTML = `
+    <div class="chat-header">
+      <div class="header-content">
+        <img src="leal-logo-dark.png" alt="Leal 360" class="header-logo" />
+        <h3>Agente de Integraciones Leal 360</h3>
+        </div>
+      <button class="close-chat" onclick="closeFloatingChat()">×</button>
+      </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="agent-message">
+        <div class="message-avatar">🤖</div>
+        <div class="message-content">
+          <p>¡Hola! Soy tu asistente de integraciones Leal 360.</p>
+          <p>¿En qué te puedo ayudar hoy?</p>
+          <div class="quick-actions">
+            <button class="action-btn" data-topic="modalidades">🔌 Modalidades</button>
+            <button class="action-btn" data-topic="compatibilidad">⚙️ Compatibilidad</button>
+            <button class="action-btn" data-topic="proceso">📋 Proceso</button>
+            <button class="action-btn" data-topic="roi">💰 ROI</button>
+            </div>
+            </div>
+          </div>
+            </div>
+  `;
+  
+  document.body.appendChild(floatingChat);
+  
+  setTimeout(() => floatingChat.classList.add('show'), 10);
+    
+    setTimeout(() => {
+    const actionBtns = floatingChat.querySelectorAll('.action-btn');
+    actionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const topic = btn.getAttribute('data-topic');
+        handleQuickAction(topic);
+      });
+    });
+  }, 100);
+}
+
+function closeFloatingChat() {
+  const floatingChat = document.getElementById('floatingChat');
+  if (floatingChat) {
+    floatingChat.classList.remove('show');
+    setTimeout(() => floatingChat.remove(), 300);
+  }
+}
+
+function handleQuickAction(topic) {
+  const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
+  const userMessage = document.createElement('div');
+  userMessage.className = 'user-message';
+  userMessage.innerHTML = `
+    <div class="message-avatar">👤</div>
+    <div class="message-content">
+      <p>${getTopicText(topic)}</p>
+      </div>
+  `;
+  chatMessages.appendChild(userMessage);
+  
+  showTypingIndicator();
+  
+  setTimeout(() => {
+    removeTypingIndicator();
+    const agentResponse = document.createElement('div');
+    agentResponse.className = 'agent-message';
+    agentResponse.innerHTML = `
+      <div class="message-avatar">🤖</div>
+      <div class="message-content">
+        <p>${getAgentResponse(getTopicText(topic))}</p>
+    </div>
+  `;
+    chatMessages.appendChild(agentResponse);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 1500);
+}
+
+function getTopicText(topic) {
+  const topics = {
+    'modalidades': 'Modalidades de integración',
+    'compatibilidad': 'Compatibilidad técnica',
+    'proceso': 'Proceso de implementación',
+    'roi': 'ROI y beneficios'
+  };
+  return topics[topic] || topic;
+}
+
+function showTypingIndicator() {
+  const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
+  const indicator = document.createElement('div');
+  indicator.className = 'typing-indicator';
+  indicator.id = 'typingIndicator';
+  indicator.innerHTML = `
+    <div class="message-avatar">🤖</div>
+    <div class="typing-dots">
+      <span></span><span></span><span></span>
+    </div>
+  `;
+  chatMessages.appendChild(indicator);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  const indicator = document.getElementById('typingIndicator');
+  if (indicator) indicator.remove();
+}
+
+function sendAgentMessage() {
+  const input = document.getElementById('agentInput');
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  let chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) {
+    createFloatingChat();
+    chatMessages = document.getElementById('chatMessages');
+  }
+  
+  const userMessage = document.createElement('div');
+  userMessage.className = 'user-message';
+  userMessage.innerHTML = `
+    <div class="message-avatar">👤</div>
+    <div class="message-content">
+      <p>${message}</p>
+    </div>
+  `;
+  chatMessages.appendChild(userMessage);
+  
+  input.value = '';
+  showTypingIndicator();
+  
+    setTimeout(() => {
+    removeTypingIndicator();
+    const agentResponse = document.createElement('div');
+    agentResponse.className = 'agent-message';
+    agentResponse.innerHTML = `
+      <div class="message-avatar">🤖</div>
+      <div class="message-content">
+        <p>${getAgentResponse(message)}</p>
+    </div>
+  `;
+    chatMessages.appendChild(agentResponse);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 1500);
+}
+
+function handleAgentInput(event) {
+  if (event.key === 'Enter') {
+    sendAgentMessage();
+  }
+}
+
+function getAgentResponse(message) {
+  const lowerMessage = message.toLowerCase();
+  
+  if (lowerMessage.includes('modalidad') || lowerMessage.includes('api') || lowerMessage.includes('sftp')) {
+    return 'Leal 360 ofrece 4 modalidades de integración: API REST, Agente de integración, SFTP y Cajero Web. Cada modalidad se adapta a diferentes necesidades técnicas y de infraestructura.';
+  }
+  
+  if (lowerMessage.includes('compatibilidad') || lowerMessage.includes('tecnología') || lowerMessage.includes('sistema')) {
+    return 'Nuestras integraciones son compatibles con la mayoría de sistemas de retail: ERPs, CRMs, sistemas de punto de venta, e-commerce y más. Te ayudo a evaluar la compatibilidad con tu stack tecnológico.';
+  }
+  
+  if (lowerMessage.includes('proceso') || lowerMessage.includes('implementación') || lowerMessage.includes('tiempo')) {
+    return 'El proceso de implementación típico incluye: 1) Evaluación técnica, 2) Configuración del entorno, 3) Desarrollo de la integración, 4) Pruebas y 5) Go-live. El tiempo promedio es de 2-4 semanas.';
+  }
+  
+  if (lowerMessage.includes('roi') || lowerMessage.includes('beneficio') || lowerMessage.includes('retorno')) {
+    return 'Los clientes de Leal 360 reportan un ROI promedio del 300% en el primer año, con incrementos del 25% en ticket promedio y 40% en frecuencia de compra.';
+  }
+  
+  return 'Gracias por tu pregunta. Nuestro equipo de integraciones puede ayudarte con detalles específicos sobre tu caso. ¿Te gustaría que te conecte con un especialista?';
+}
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', initializeApp);

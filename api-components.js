@@ -63,13 +63,10 @@ function renderSidebarEndpoint(endpoint) {
     <button class="endpoint-item ${isSelected ? 'selected' : ''}" 
             onclick="selectEndpoint('${endpoint.id}')"
             data-endpoint="${endpoint.id}">
-      <div class="endpoint-method ${endpoint.method.toLowerCase()}">
+      <span class="endpoint-method ${endpoint.method.toLowerCase()}">
         ${endpoint.method}
-      </div>
-      <div class="endpoint-info">
-        <div class="endpoint-title">${endpoint.title}</div>
-        <div class="endpoint-path">${endpoint.endpoint}</div>
-      </div>
+      </span>
+      <span class="endpoint-name">${endpoint.title}</span>
     </button>
   `;
 }
@@ -294,39 +291,77 @@ function renderParametersTab(endpoint) {
 
 function renderCodeTab(endpoint) {
   const curlExample = generateCurlExample(endpoint);
-  const jsExample = generateJsExample(endpoint);
   
   return `
     <div class="code-content">
-      <div class="code-section">
-        <div class="code-header">
-          <h4>cURL</h4>
+      <!-- Card 1: cURL Example -->
+      <div class="code-card">
+        <div class="code-card-header">
+          <h4>cURL Example</h4>
           <button class="copy-button" onclick="copyToClipboard('${curlExample.replace(/'/g, "\\'")}')">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
             Copiar
           </button>
         </div>
-        <pre class="code-block"><code>${curlExample}</code></pre>
+        <div class="code-card-content">
+          <pre class="code-block"><code>${escapeHtml(curlExample)}</code></pre>
+        </div>
       </div>
       
-      <div class="code-section">
-        <div class="code-header">
-          <h4>JavaScript</h4>
-          <button class="copy-button" onclick="copyToClipboard('${jsExample.replace(/'/g, "\\'")}')">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            Copiar
-          </button>
+      <!-- Card 2: Request Body (solo si existe) -->
+      ${endpoint.requestExample ? `
+        <div class="code-card">
+          <div class="code-card-header">
+            <h4>Request Body</h4>
+            <button class="copy-button" onclick="copyToClipboard('${endpoint.requestExample.replace(/'/g, "\\'")}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copiar
+            </button>
+          </div>
+          <div class="code-card-content">
+            <pre class="code-block"><code>${escapeHtml(JSON.stringify(JSON.parse(endpoint.requestExample), null, 2))}</code></pre>
+          </div>
         </div>
-        <pre class="code-block"><code>${jsExample}</code></pre>
-      </div>
+      ` : ''}
+      
+      <!-- Card 3: Response Example (solo si existe) -->
+      ${endpoint.responseExample ? `
+        <div class="code-card">
+          <div class="code-card-header">
+            <h4>Response Example</h4>
+            <button class="copy-button" onclick="copyToClipboard('${JSON.stringify(endpoint.responseExample, null, 2).replace(/'/g, "\\'")}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copiar
+            </button>
+          </div>
+          <div class="code-card-content">
+            <pre class="code-block"><code>${escapeHtml(JSON.stringify(endpoint.responseExample, null, 2))}</code></pre>
+          </div>
+        </div>
+      ` : ''}
     </div>
   `;
+}
+
+// Función helper para escapar HTML
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
 }
 
 // ==========================================
@@ -439,9 +474,16 @@ function executeEndpointTest(endpointId) {
     responseContent.innerHTML = `
       <div class="response-success">
         <div class="response-header">
-          <span class="status-badge success">200 OK</span>
+          <div class="response-status">
+            <span class="status-code">200 OK</span>
+            <span>Respuesta exitosa</span>
+          </div>
           <button class="copy-button" onclick="copyToClipboard('${JSON.stringify(mockResponse, null, 2).replace(/'/g, "\\'")}')">
-            Copiar Respuesta
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copiar
           </button>
         </div>
         <pre class="response-json"><code>${JSON.stringify(mockResponse, null, 2)}</code></pre>
@@ -497,20 +539,6 @@ function generateCurlExample(endpoint) {
   return curl;
 }
 
-function generateJsExample(endpoint) {
-  const baseUrl = 'https://testapi.puntosleal.com';
-  const url = `${baseUrl}${endpoint.endpoint}`;
-  
-  let js = `fetch('${url}', {\n  method: '${endpoint.method}',\n  headers: {\n    'Content-Type': 'application/json'\n  }`;
-  
-  if (endpoint.method !== 'GET') {
-    js += `,\n  body: JSON.stringify(${endpoint.requestExample})`;
-  }
-  
-  js += `\n})\n.then(response => response.json())\n.then(data => console.log(data))\n.catch(error => console.error('Error:', error));`;
-  
-  return js;
-}
 
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {

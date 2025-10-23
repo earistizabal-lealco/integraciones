@@ -26,13 +26,15 @@
     </header>
 
     <!-- Contenido principal -->
-    <main id="mainContent">
-        <!-- El contenido se renderiza dinámicamente aquí -->
+    <main class="main-content">
+        <div id="mainContent">
+            <!-- Contenido se carga dinámicamente -->
+        </div>
     </main>
 
-    <!-- Botón de menú móvil (oculto por defecto) -->
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <!-- Mobile Menu Button -->
+    <button id="mobileMenuBtn" class="btn btn-primary" style="display: none; position: fixed; top: 1rem; left: 1rem; z-index: 100;">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
             <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
         Menú

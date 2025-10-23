@@ -45,11 +45,13 @@
 }
 
 .hero-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 3rem;
+  font-weight: 800;
   color: white;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   line-height: 1.2;
+  text-align: center;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-title .highlight {
@@ -58,11 +60,13 @@
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
-  max-width: 700px;
+  font-size: 1.375rem;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.5;
+  max-width: 800px;
   margin: 0 auto;
+  text-align: center;
+  font-weight: 400;
 }
 
 /* =========================
@@ -431,11 +435,11 @@
   }
   
   .hero-title {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
   
   .hero-subtitle {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
   }
   
   .integrations-grid-section {
@@ -466,7 +470,11 @@
   }
   
   .hero-title {
-    font-size: 1.75rem;
+    font-size: 1.875rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.125rem;
   }
   
   .integrations-grid-section {
@@ -691,18 +699,22 @@
   font-size: 0.875rem;
   color: var(--text-secondary);
   vertical-align: top;
+  text-align: center;
 }
 
 .comparison-table td.criteria-cell {
   font-weight: 500;
   color: var(--text-primary);
+  text-align: left;
 }
 
 .comparison-table tr.section-header td {
-  background: #edf2f7;
+  background: transparent;
+  border-top: 2px solid var(--border-light);
   font-weight: 600;
   color: var(--text-primary);
-  padding: 1rem;
+  padding: 2rem 1rem 1rem;
+  text-align: center;
 }
 
 /* Badges y elementos */
@@ -882,106 +894,19 @@
   background: #edf2f7;
 }
 
-/* =========================
-   WIZARD DE DECISIÓN
-   ========================= */
-.decision-wizard {
-  max-width: 600px;
-}
-
-.wizard-header {
-  text-align: center;
-  padding: 2rem 2rem 1rem;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.wizard-header h2 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.wizard-header p {
+.coming-soon-badge {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: var(--coming-soon-bg);
   color: var(--text-secondary);
-}
-
-.wizard-content {
-  padding: 2rem;
-}
-
-.wizard-step h3 {
-  font-size: 1.25rem;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
   font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 2rem;
+  font-size: 0.9375rem;
   text-align: center;
+  cursor: default;
 }
 
-.wizard-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.wizard-option {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: var(--card-bg);
-  border: 2px solid var(--border-light);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: left;
-}
-
-.wizard-option:hover {
-  border-color: var(--accent-yellow);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.option-icon {
-  font-size: 2rem;
-  flex-shrink: 0;
-}
-
-.option-text {
-  flex: 1;
-}
-
-.option-text strong {
-  display: block;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.25rem;
-}
-
-.option-text span {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
-.wizard-result {
-  text-align: center;
-  padding: 2rem;
-}
-
-.result-content h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-}
-
-.result-content p {
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
 
 /* =========================
    RESPONSIVE DESIGN
