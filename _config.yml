@@ -1,0 +1,51 @@
+# GitHub Pages configuration
+title: Leal 360 - Prototipo de Integraciones
+description: Prototipo interactivo de la plataforma Leal 360 con documentación de integraciones
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - .gitignore
+  - .github/
+  - leal-360-prototype/
+  - backup/
+  - deploy-prototype/
+  - leal-api-guide-main/
+  - Assets Leal 360/
+  - Imágenes/
+  - *.md
+  - *.zip
+  - *.py
+  - *.sh
+  - *.json
+  - *.txt
+  - *.pdf
+  - *.pptx
+  - *.webp
+  - *.jpg
+  - *.png
+  - *.svg
+  - *.html~
+  - *.css~
+  - *.js~
+  - temp_*
+  - test_*
+  - debug_*
+  - final_*
+  - index_*
+  - simple_*
+  - start_*
+  - server_*
+  - dev_*
+  - tokens.json
+  - version.txt
+  - CHANGELOG.md
+  - RELEASE_NOTES.md
+  - deployment-plan.md
+  - fix-hero-two-lines.plan.md
